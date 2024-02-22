@@ -3,7 +3,7 @@
 %require "3.5"
 %defines
 %define api.value.type variant
-%parse-param {yy::Driver* driver}
+%param {yy::Driver* driver}
 
 %code requires
 {
