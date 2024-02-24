@@ -1,13 +1,19 @@
 %language "c++"
 %skeleton "lalr1.cc"
 %require "3.5"
+
 %defines
+%define api.token.raw
+%define api.token.constructor
 %define api.value.type variant
-%param {yy::Driver* driver}
+%define api.parser.class { parser }
+%define api.namespace { yy }
+%define parse.error simple
+%define api.token.prefix {TOKEN_}
 
 %code requires
 {
-
+#include <iostream>
 //forward declaration
 namespace yy { class Driver; }
 }
@@ -16,21 +22,12 @@ namespace yy { class Driver; }
 #include "driver.hpp"
 
 namespace yy {
-
-parser::token_type yylex(parser::semantic_type* yylval, Driver* driver) {
-    return driver->yylex(yylval);
-
-}
-}
+parser::symbol_type yylex(Driver* driver) { return driver->yylex(); }
 }
 
-%defines
-%define api.token.raw
-%define api.parser.class { parser }
-%define api.token.constructor
-%define api.namespace { yy }
-%define parse.error simple
-%define api.token.prefix {TOKEN_}
+}
+
+%param {yy::Driver* driver}
 
 %token
     IF      "if"
@@ -88,15 +85,12 @@ parser::token_type yylex(parser::semantic_type* yylval, Driver* driver) {
 %start program
 
 %%
-
-program : stmts
-;
-
-stmts : %empty
-      | stmts stmt
-;
-
-stmt  : SCOLON
+program:
+    %empty
+| SCOLON {std::cout << "PArsed\n";}
 ;
 
 %%
+
+void yy::parser::error(const std::string&){}
+

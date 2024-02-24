@@ -4,7 +4,7 @@
 using namespace yy;
 
 int main() {
-    FlexLexer* lexer = new Lexer;
+    Lexer* lexer = new Lexer;
     Driver driver(lexer);
     driver.parse();
     delete lexer;

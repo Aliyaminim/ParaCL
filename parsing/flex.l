@@ -1,7 +1,8 @@
 %option c++
 %{
     /*definitions*/
-    #include "parser.tab.hh"
+    #include "lexer.hpp"
+    #define yyterminate();
 %}
 
 %option noyywrap nounput noinput nodefault
@@ -45,10 +46,10 @@ IDENTIFIER [a-zA-Z_][a-zA-Z_{DIGIT}]*
 ">"     { return yy::parser::make_GREATER(); }
 ">="    { return yy::parser::make_GREATER_EQ(); }
 
-{IDENTIFIER}    { return yy::parser::make_IDENTIFIER(yytext); }
+{IDENTIFIER}    { return yy::parser::make_VAR(yytext); }
 {NUMBER}  { return yy::parser::make_NUMBER(std::atoi(yytext)); }
 
 .         { throw yy::parser::syntax_error("Unknown symbol"); }
-<<EOF>> { return yy::parser::make_EOF(); }
+<<EOF>> { return yy::parser::make_EOF(); yyterminate();}
 
 %%
