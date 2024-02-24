@@ -8,12 +8,14 @@
 %define api.value.type variant
 %define api.parser.class { parser }
 %define api.namespace { yy }
-%define parse.error simple
 %define api.token.prefix {TOKEN_}
+%define parse.lac full
+%define parse.error verbose
 
 %code requires
 {
 #include <iostream>
+#include <stdexcept>
 //forward declaration
 namespace yy { class Driver; }
 }
@@ -92,5 +94,7 @@ program:
 
 %%
 
-void yy::parser::error(const std::string&){}
-
+void yy::parser::error(const std::string &msg) {
+  std::cout << "Error occurred on line" << std::endl;
+  throw std::runtime_error{msg};
+}
