@@ -11,6 +11,7 @@
 %define api.token.prefix {TOKEN_}
 %define parse.lac full
 %define parse.error verbose
+%define parse.trace
 
 %code requires
 {
@@ -87,9 +88,47 @@ parser::symbol_type yylex(Driver* driver) { return driver->yylex(); }
 %start program
 
 %%
-program:
-    %empty
-| SCOLON {std::cout << "PArsed\n";}
+
+program: %empty
+| stmts
+;
+
+stmts: stmts stmt
+| stmt
+;
+
+stmt: assignment
+| printing
+| scope
+;
+
+assignment: VAR ASSIGN expr SCOLON
+| VAR ASSIGN assignment
+;
+
+printing: PRINT expr SCOLON
+;
+
+scope: LBRACE program RBRACE
+;
+
+expr: arithmetic_expr
+;
+
+arithmetic_expr: arithmetic_expr PLUS term
+| arithmetic_expr MINUS term
+| term
+;
+
+term: term MULTIPLY primary
+| term DIVIDE primary
+| primary
+;
+
+primary:    LPAREN expr RPAREN
+            | NUMBER
+            | VAR
+            | QMARK
 ;
 
 %%
