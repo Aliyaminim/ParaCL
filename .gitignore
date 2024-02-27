@@ -1,5 +1,7 @@
 build
 draft.cpp
+gr_draft.in
+hello.cc
 
 # Prerequisites
 *.d
