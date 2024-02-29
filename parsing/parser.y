@@ -74,61 +74,88 @@ parser::symbol_type yylex(Driver* driver) { return driver->yylex(); }
 %token <std::string> VAR
 
 %right ASSIGN
-%left QMARK
 %left OR
 %left AND
-%left NOT
+%right NOT
+%left LESS LESS_EQ GREATER GREATER_EQ EQUAL NOT_EQUAL
 %left MINUS PLUS
-%left MULTIPLY DIVIDE
-%precedence UMINUS
-/* nonassoc UMINUS*/
-%right THEN ELSE
+%left MULTIPLY DIVIDE MODULUS
+%nonassoc UPLUS UMINUS
 
+%precedence THEN
+%precedence ELSE
 
 %start program
 
 %%
 
-program: %empty
-| stmts
+program: stmts
 ;
 
 stmts: stmts stmt
-| stmt
+| %empty
 ;
 
-stmt: assignment
-| printing
+stmt: expr_stmt
+| PRINT expr SCOLON
 | scope
+| while_stmt
+| if_stmt
 ;
 
-assignment: VAR ASSIGN expr SCOLON
-| VAR ASSIGN assignment
+expr_stmt: expr SCOLON
 ;
 
-printing: PRINT expr SCOLON
+scope: LBRACE stmts RBRACE
 ;
 
-scope: LBRACE program RBRACE
+while_stmt: WHILE LPAREN expr RPAREN stmt
 ;
 
-expr: arithmetic_expr
+if_stmt: IF LPAREN expr RPAREN stmt %prec THEN
+| IF LPAREN expr RPAREN stmt ELSE stmt
 ;
 
-arithmetic_expr: arithmetic_expr PLUS term
-| arithmetic_expr MINUS term
-| term
+expr: assign_expr
+| logic_expr
 ;
 
-term: term MULTIPLY primary
-| term DIVIDE primary
-| primary
+assign_expr: VAR ASSIGN assign_expr
+| VAR ASSIGN logic_expr
 ;
 
-primary:    LPAREN expr RPAREN
-            | NUMBER
-            | VAR
-            | QMARK
+logic_expr: logic_expr AND comp_expr
+| logic_expr OR comp_expr
+| comp_expr
+;
+
+comp_expr: comp_expr EQUAL arith_expr
+| comp_expr NOT_EQUAL arith_expr
+| comp_expr LESS arith_expr
+| comp_expr LESS_EQ arith_expr
+| comp_expr GREATER arith_expr
+| comp_expr GREATER_EQ arith_expr
+| arith_expr
+;
+
+arith_expr: arith_expr PLUS unary_expr
+| arith_expr MINUS unary_expr
+| arith_expr MULTIPLY unary_expr
+| arith_expr DIVIDE unary_expr
+| arith_expr MODULUS unary_expr
+| unary_expr
+;
+
+unary_expr: MINUS  primary_expr %prec UMINUS
+| PLUS  primary_expr %prec UPLUS
+| NOT primary_expr %prec NOT
+| primary_expr
+;
+
+primary_expr: LPAREN expr RPAREN
+| NUMBER
+| VAR
+| QMARK
 ;
 
 %%
