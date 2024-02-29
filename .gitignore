@@ -2,6 +2,7 @@ build
 draft.cpp
 gr_draft.in
 hello.cc
+cmp
 
 # Prerequisites
 *.d
