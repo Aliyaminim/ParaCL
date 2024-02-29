@@ -46,6 +46,10 @@ IDENTIFIER [a-zA-Z_][a-zA-Z_{DIGIT}]*
 ">"     { return yy::parser::make_GREATER(); }
 ">="    { return yy::parser::make_GREATER_EQ(); }
 
+"&&"    { return yy::parser::make_AND(); }
+"||"    { return yy::parser::make_OR(); }
+"!"     { return yy::parser::make_NOT(); }
+
 {IDENTIFIER}    { return yy::parser::make_VAR(yytext); }
 {NUMBER}  { return yy::parser::make_NUMBER(std::atoi(yytext)); }
 
