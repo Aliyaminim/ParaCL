@@ -78,3 +78,7 @@ void Print_Pr_Op_Node(PrintOp* node){
     std::cout << "Oper: Print(" << X->num_ << ")\n";
     return;
 }
+
+void MakeNode(...){
+    
+}   
