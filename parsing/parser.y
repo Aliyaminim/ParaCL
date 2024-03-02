@@ -19,6 +19,10 @@
 #include <stdexcept>
 //forward declaration
 namespace yy { class Driver; }
+extern int curr_line;
+#ifdef DEBUG
+    extern int debugg_num;
+#endif
 }
 
 %code {
@@ -101,6 +105,7 @@ stmt: expr_stmt
 | scope
 | while_stmt
 | if_stmt
+| SCOLON
 ;
 
 expr_stmt: expr SCOLON
@@ -161,6 +166,9 @@ primary_expr: LPAREN expr RPAREN
 %%
 
 void yy::parser::error(const std::string &msg) {
-  std::cout << "Error occurred on line" << std::endl;
+  std::cout << "Error occurred on line "  << curr_line  << std::endl;
+  #ifdef DEBUG
+    std::cout << "Maybe parsed wrongly number: " << debugg_num << std::endl;
+  #endif
   throw std::runtime_error{msg};
 }
