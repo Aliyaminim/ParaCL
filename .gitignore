@@ -3,6 +3,7 @@ draft.cpp
 gr_draft.in
 hello.cc
 cmp
+draft.in
 
 # Prerequisites
 *.d

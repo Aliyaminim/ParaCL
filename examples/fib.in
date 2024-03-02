@@ -1,0 +1,25 @@
+
+num = ?;
+
+if (num == 0)
+    print (0);
+
+if (num == 1 || num == 2)
+    print 1;
+
+if (num > 2) {
+
+    fst_fib = 1;
+    snd_fib = 1;
+    res = 0;
+
+    while (num > 2) {
+        res = fst_fib + snd_fib;
+        fst_fib = snd_fib;
+        snd_fib = res;
+        num = num - 1;
+    }
+
+    print (res);
+
+}
