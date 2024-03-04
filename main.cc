@@ -1,13 +1,14 @@
 #include <stdexcept>
 #include "driver.hpp"
 #include "lexer.hpp"
+#include <memory>
 
 using namespace yy;
 
 int main() {
     int ret = 0;
-    Lexer* lexer = new Lexer;
-    Driver driver(lexer);
+    std::unique_ptr<Lexer> lexer = std::make_unique<Lexer>();
+    Driver driver(std::move(lexer));
     try {
         driver.parse();
     }
@@ -16,6 +17,5 @@ int main() {
         std::cerr << e.what() << std::endl;
         ret = 1;
     }
-    delete lexer;
     return ret;
 }
