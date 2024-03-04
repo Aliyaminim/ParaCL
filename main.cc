@@ -7,8 +7,7 @@ using namespace yy;
 
 int main() {
     int ret = 0;
-    std::unique_ptr<Lexer> lexer = std::make_unique<Lexer>();
-    Driver driver(std::move(lexer));
+    Driver driver{};
     try {
         driver.parse();
     }

@@ -8,7 +8,7 @@ namespace yy {
 class Driver final {
     std::unique_ptr<Lexer> plex;
 public:
-    Driver(std::unique_ptr<Lexer> plex_): plex(std::move(plex_)) {}
+    Driver(): plex(std::make_unique<Lexer>()) {}
 
     parser::symbol_type yylex() {
         parser::symbol_type tt = static_cast<parser::symbol_type>(plex->get_token());
