@@ -1,0 +1,10 @@
+border = ?;
+res = 1;
+iter = 1;
+
+while (iter <= border) {
+    res = res * iter;
+    iter = iter + 1;
+}
+
+print (((res)));

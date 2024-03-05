@@ -1,3 +1,4 @@
+x = ?;
 x = x + 3 * 4 - (5 - 3);
-y = g - ? + c -g;
-print ?;
+y = x - ? - x;
+print y;
