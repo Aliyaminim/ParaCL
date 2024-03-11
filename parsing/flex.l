@@ -2,21 +2,26 @@
 %{
     /*definitions*/
     #include "lexer.hpp"
+    int curr_line = 1;
+    #ifdef DEBUG
+        int debugg_num = 0;
+    #endif
     #define yyterminate();
 %}
 
-%option noyywrap nounput noinput nodefault
+%option noyywrap nounput noinput nodefault yylineno
 %option yyclass="yy::Lexer"
 
 WS [ \t\n\r\v]+
 DIGIT [0-9]
 DIGIT1 [1-9]
 NUMBER (0|{DIGIT1}{DIGIT}*)
-IDENTIFIER [a-zA-Z_][a-zA-Z_{DIGIT}]*
+IDENTIFIER [a-zA-Z_][a-zA-Z_0-9]*
 
 /* rules */
 %%
 
+"\n"    {curr_line++; };
 {WS} /*for now do nothing*/
 
 "if"    { return yy::parser::make_IF(); }
@@ -50,10 +55,25 @@ IDENTIFIER [a-zA-Z_][a-zA-Z_{DIGIT}]*
 "||"    { return yy::parser::make_OR(); }
 "!"     { return yy::parser::make_NOT(); }
 
-{IDENTIFIER}    { return yy::parser::make_VAR(yytext); }
-{NUMBER}  { return yy::parser::make_NUMBER(std::atoi(yytext)); }
+{IDENTIFIER}    {
+    #ifdef DEBUG
+        std::cout << "Variable's name is " << yytext << std::endl;
+    #endif
+    return yy::parser::make_VAR(yytext);
+}
+{NUMBER}  {
+    #ifdef DEBUG
+    debugg_num = std::atoi(yytext);
+    #endif
+    return yy::parser::make_NUMBER(std::atoi(yytext));
+}
 
-.         { throw yy::parser::syntax_error("Unknown symbol"); }
+.       {
+    #ifdef DEBUG
+        std::cout << yytext << std::endl;
+    #endif
+    throw yy::parser::syntax_error("Unknown symbol");
+}
 <<EOF>> { return yy::parser::make_EOF(); yyterminate();}
 
 %%

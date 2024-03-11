@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "lexer.hpp"
 #include "parser.tab.hh"
 #include "scope_node.hpp"
@@ -7,12 +8,11 @@
 
 namespace yy {
 class Driver final {
-    Lexer* plex;
-private:
+    std::unique_ptr<Lexer> plex;
     AST::scope_node * current_parsing_scope;
     AST::astree * ast_;
 public:
-    Driver(Lexer* plex_): plex(plex_) {}
+    Driver(): plex(std::make_unique<Lexer>()) {}
 
     parser::symbol_type yylex() {
         parser::symbol_type tt = static_cast<parser::symbol_type>(plex->get_token());
