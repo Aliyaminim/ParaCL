@@ -28,6 +28,8 @@ enum class functional_oper {
     FUNC_PRINT,
 };
 
-enum class scope_oper {
+enum class terminal_nodes {
     SCOPE,
+    INT,
+    VAL_EXPR,
 };

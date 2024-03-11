@@ -1,9 +1,13 @@
-#pragma once
+#ifndef TREE_CPP
+#define TREE_CPP
 
 #include <iostream>
 #include <string>
 #include <vector>
 
+#define OBUF std::cout
+
+using VAL_TYPE = int;
 
 // Типы операций генерируются бизоном и флексом, далее используются нодами
 
@@ -24,6 +28,7 @@ struct base_ast_node {
     Node_name nname;
     base_ast_node(base_ast_node *parent, Node_name & a) : parent_(parent), nname(a) {};
     virtual ~base_ast_node() = default;
+    virtual VAL_TYPE process_node() = 0;
 };
 
 struct NumNode : public base_ast_node
@@ -33,8 +38,4 @@ struct NumNode : public base_ast_node
         base_ast_node{parent, a}, num_(x) {}
 };
 
-
-base_ast_node* MakeNode(Node_name a){
-    base_ast_node * X = new base_ast_node{nullptr, a};
-    return X;
-}
+#endif

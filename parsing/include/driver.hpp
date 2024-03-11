@@ -2,7 +2,8 @@
 
 #include "lexer.hpp"
 #include "parser.tab.hh"
-#include "tree_nodes_include.hpp"
+#include "scope_node.hpp"
+#include "ast_tree.hpp"
 
 namespace yy {
 class Driver final {
@@ -26,7 +27,7 @@ public:
 
     template <typename NodeType, typename... Args>
     base_ast_node *make_node(Args&&... args) {
-        auto node = ast_.make_node<NodeType>(std::forward<Args>(args)...);
+        auto node = ast_->make_node<NodeType>(std::forward<Args>(args)...);
         //
         return node;
     }

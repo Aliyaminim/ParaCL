@@ -19,6 +19,7 @@ find_package(Threads REQUIRED)
 find_package(BISON 3.7.6)
 find_package(FLEX REQUIRED)
 
+set(TREE_INCLUDE_DIR ./data_tree)
 set(INCLUDE_DIR ./parsing/include)
 set(PARSER ./parsing/parser.y)
 set(LEXER ./parsing/flex.l)
@@ -37,6 +38,7 @@ bison_target(parser
 
 add_flex_bison_dependency(scanner parser)
 
+include_directories(${PROJECT_NAME} PUBLIC ${TREE_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(${PROJECT_NAME}

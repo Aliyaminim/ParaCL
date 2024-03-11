@@ -1,35 +1,16 @@
 #pragma once
 
 #include "tree.hpp"
-#include "number_node.hpp"
+#include "value_expressions.hpp"
 
-struct func_node_print : public base_ast_node {
-    //
-    base_ast_node *out_ = nullptr;
-    func_node_print(base_ast_node *parent, Node_name a, base_ast_node* out) :
-        base_ast_node{parent, a}, out_(out) {}
-};
+namespace AST {
+    struct func_node_print : public base_ast_node {
+        //
+        value_expression *out_ = nullptr;
 
-func_node_print* MakePrOp(int x){
-    Node_name print{"print"};
-    Node_name numb{"number"};
-    NumNode * n = new NumNode{nullptr, numb, x};
-    func_node_print * X = new func_node_print{nullptr, print, n};
-    return X;
+        func_node_print(scope_node *parent, Node_name a, value_expression* out) :
+            base_ast_node{parent, a}, out_(out) {}
+        
+        VAL_TYPE process_node() override;
+    };
 }
-
-func_node_print* MakePrOp(int x, base_ast_node * parent){
-    Node_name print{"print"};
-    Node_name numb{"number"};
-    NumNode * n = new NumNode{parent, numb, x};
-    func_node_print * X = new func_node_print{parent, print, n};
-    return X;
-}
-
-void Print_Pr_Op_Node(func_node_print* node){
-    base_ast_node* A = node->out_;
-    NumNode* X = dynamic_cast<NumNode*>(A);
-    std::cout << "Oper: Print(" << X->num_ << ")\n";
-    return;
-}
-
