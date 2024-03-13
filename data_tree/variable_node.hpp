@@ -1,10 +1,12 @@
 #pragma once
 
 #include "tree.hpp"
+//#include <string>
 
 namespace AST {
     class variable_node : public base_ast_node {
 
+        //std::string name;
         int value;
 
     public:

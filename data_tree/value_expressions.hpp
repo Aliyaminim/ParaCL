@@ -2,7 +2,7 @@
 
 #include "tree.hpp"
 #include "binary_operations.hpp"
-#include "number_node.hpp"
+#include "number_expr.hpp"
 
 namespace AST {
     class value_expression : public base_ast_node {
@@ -15,7 +15,7 @@ namespace AST {
     public:
         value_expression(base_ast_node *parent, Node_name a) :
             base_ast_node{parent, a} {}
-        
+
         binary_operation* add_binary_operand(binary_operation* x){
             if (not calculated){
                 container.push_back(x);

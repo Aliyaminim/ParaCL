@@ -1,16 +1,7 @@
 #ifndef AST_CPP
 #define AST_CPP
 
-#include "scope_node.hpp"
-#include "node_types.hpp"
-
 #include "tree.hpp"
-#include "number_node.hpp"
-#include "variable_node.hpp"
-#include "value_expressions.hpp"
-#include "assignment.hpp"
-
-
 
 namespace AST {
     class astree {
@@ -40,7 +31,7 @@ namespace AST {
         //         number_node * N = new number_node{nullptr, "", std::forward<t_args>(args)...};
         //         return N;
         //         break;
-            
+
         //     default:
         //         break;
         //     }
@@ -54,7 +45,7 @@ namespace AST {
             // Функция узнает текущий скоуп от дерева
             // Затем узнает тип операции
             // Затем делает саму ноду свичом по типам операций
-            // 
+            //
         //     return nullptr;
         // }
 
