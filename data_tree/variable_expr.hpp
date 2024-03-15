@@ -4,10 +4,10 @@
 #include <string>
 
 namespace AST {
-class variable_expr : public base_expr_node {
-    std::string name;
-public:
-    explicit variable_expr(std::string nm) : name(nm) {}
-};
+    class variable_expr : public base_expr_node {
+        std::string name;
+    public:
+        explicit variable_expr(std::string nm) : name(nm) {}
+    };
 }
 

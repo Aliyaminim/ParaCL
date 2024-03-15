@@ -3,11 +3,11 @@
 #include "base_ast_node.hpp"
 
 namespace AST {
-class number_expr : public base_expr_node {
-    VAL_TYPE value;
-public:
-    explicit number_expr(VAL_TYPE v) : value(v) {}
+    class number_expr : public base_expr_node {
+        VAL_TYPE value;
+    public:
+        explicit number_expr(VAL_TYPE v) : value(v) {}
 
-    VAL_TYPE get_value() const { return value; }
-};
+        VAL_TYPE get_value() const { return value; }
+    };
 }
