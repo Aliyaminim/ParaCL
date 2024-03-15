@@ -84,6 +84,9 @@ parser::symbol_type yylex(Driver* driver) { return driver->yylex(); }
 
 %type<AST::base_ast_node*>
     stmt
+;
+
+%type<AST::base_expr_node*>
     expr_stmt
     expr
     assign_expr
@@ -94,11 +97,8 @@ parser::symbol_type yylex(Driver* driver) { return driver->yylex(); }
     primary_expr
 ;
 
-%type<AST::if_stmt*>
+%type<AST::base_stmt_node*>
     if_stmt
-;
-
-%type<AST::while_stmt*>
     while_stmt
 ;
 
@@ -195,7 +195,7 @@ comp_expr: comp_expr EQUAL arith_expr { $$ = driver->make_node<AST::binary_expr>
 | comp_expr LESS arith_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_LESS, $1, $3); }
 | comp_expr LESS_EQ arith_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_LESS_EQU, $1, $3); }
 | comp_expr GREATER arith_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_GREATER, $1, $3); }
-| comp_expr GREATER_EQ arith_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_GREATER_EQ, $1, $3); }
+| comp_expr GREATER_EQ arith_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_GREATER_EQU, $1, $3); }
 | arith_expr { $$ = $1; }
 ;
 
@@ -207,7 +207,7 @@ arith_expr: arith_expr PLUS unary_expr { $$ = driver->make_node<AST::binary_expr
 | unary_expr { $$ = $1; }
 ;
 
-unary_expr: MINUS  primary_expr %prec UMINUS { $$ = driver->make_ast_node<AST::unary_expr>(AST::unary_oper::UNARY_MINUS, $2); }
+unary_expr: MINUS  primary_expr %prec UMINUS { $$ = driver->make_node<AST::unary_expr>(AST::unary_oper::UNARY_MINUS, $2); }
 | PLUS  primary_expr %prec UPLUS { $$ = driver->make_node<AST::unary_expr>(AST::unary_oper::UNARY_PLUS, $2); }
 | NOT primary_expr %prec NOT { $$ = driver->make_node<AST::unary_expr>(AST::unary_oper::UNARY_NOT, $2); }
 | primary_expr { $$ = $1; }
@@ -215,7 +215,7 @@ unary_expr: MINUS  primary_expr %prec UMINUS { $$ = driver->make_ast_node<AST::u
 
 primary_expr: LPAREN expr RPAREN { $$ = $2; }
 | NUMBER { $$ = driver->make_node<AST::number_expr>($1); }
-| VAR   { $$ = driver->make_node<AST::variable_node>($1); }
+| VAR   { $$ = driver->make_node<AST::variable_expr>($1); }
 | QMARK { $$ = driver->make_node<AST::read_expr>(); }
 ;
 

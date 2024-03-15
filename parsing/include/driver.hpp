@@ -16,7 +16,7 @@ public:
     Driver(): plex(std::make_unique<Lexer>()), ast_(std::make_unique<AST::astree>()),
                 current_parsing_scope(nullptr) {}
 
-    void set_ast_root(AST::base_ast_node* ptr) {
+    void set_ast_root(AST::scope_node* ptr) {
         ast_->set_root(ptr);
     }
 
