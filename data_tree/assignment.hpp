@@ -1,14 +1,18 @@
 #pragma once
 
-/*
+#include "base_ast_node.hpp"
 #include "variable_expr.hpp"
+#include <vector>
 
 namespace AST {
-    class assignment_node : public binary_operation {
+class assignment_expr : public base_expr_node {
+    std::vector<variable_expr*> lhs;
+    base_expr_node* rhs;
+public:
+    assignment_expr(variable_expr* v, base_expr_node* r) : rhs(r) { lhs.push_back(v); }
 
-    public:
-        assignment_node(base_ast_node *parent, Node_name a, variable_node* l, value_expression* r) :
-            binary_operation{parent, a, l, r} {}
-        VAL_TYPE process_node() override;
-    };
-} */
+    void add_var(variable_expr* var) {
+        lhs.push_back(var);
+    }
+};
+}

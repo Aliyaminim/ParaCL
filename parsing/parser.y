@@ -181,8 +181,8 @@ expr: assign_expr { $$ = $1; }
 | logic_expr { $$ = $1; }
 ;
 
-assign_expr: VAR ASSIGN assign_expr { /*$$ = $3; auto left = AST::variable_node{$1}; $$->append_variable(left);*/ }
-| VAR ASSIGN logic_expr {/* auto left = AST::variable_node{$1}; $$ = driver->make_node<AST::assignment_node>(left, $3);*/ }
+assign_expr: VAR ASSIGN assign_expr { $$ = $3; auto left = AST::variable_expr{$1}; $$->add_var(left); }
+| VAR ASSIGN logic_expr { auto left = AST::variable_node{$1}; $$ = driver->make_node<AST::assignment_node>(left, $3); }
 ;
 
 logic_expr: logic_expr AND comp_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_AND, $1, $3); }
