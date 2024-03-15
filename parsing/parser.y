@@ -89,12 +89,15 @@ parser::symbol_type yylex(Driver* driver) { return driver->yylex(); }
 %type<AST::base_expr_node*>
     expr_stmt
     expr
-    assign_expr
     logic_expr
     comp_expr
     arith_expr
     unary_expr
     primary_expr
+;
+
+%type<AST::assignment_expr*>
+    assign_expr
 ;
 
 %type<AST::base_stmt_node*>
@@ -144,12 +147,12 @@ stmt: expr_stmt { $$ = $1; }
 expr_stmt: expr SCOLON { $$ = $1; }
 ;
 
-scope: open_brace stmts close_brace { $$ = $3->set_stmts($2); }
+scope: open_brace stmts close_brace { $3->set_stmts($2); }
 ;
 
 open_brace: LBRACE {
     auto sc = driver->make_node<AST::scope_node>();
-    sc.set_parent_scope(driver->get_curr_parsing_scope());
+    sc->set_parent_scope(driver->get_curr_parsing_scope());
     driver->set_curr_parsing_scope(sc);
 }
 ;
@@ -181,8 +184,8 @@ expr: assign_expr { $$ = $1; }
 | logic_expr { $$ = $1; }
 ;
 
-assign_expr: VAR ASSIGN assign_expr { $$ = $3; auto left = AST::variable_expr{$1}; $$->add_var(left); }
-| VAR ASSIGN logic_expr { auto left = AST::variable_node{$1}; $$ = driver->make_node<AST::assignment_node>(left, $3); }
+assign_expr: VAR ASSIGN assign_expr { $$ = $3; auto left = driver->make_node<AST::variable_expr>($1); $$->add_var(left); }
+| VAR ASSIGN logic_expr { auto left = driver->make_node<AST::variable_expr>($1); $$ = driver->make_node<AST::assignment_expr>(left, $3); }
 ;
 
 logic_expr: logic_expr AND comp_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_AND, $1, $3); }
@@ -222,7 +225,7 @@ primary_expr: LPAREN expr RPAREN { $$ = $2; }
 %%
 
 void yy::parser::error(const std::string &msg) {
-  std::cout << "Error occurred on line "  << curr_line  << std::endl;
+  //std::cout << "Error occurred on line "  << curr_line  << std::endl;
   #ifdef DEBUG
     std::cout << "Maybe parsed wrongly number: " << debugg_num << std::endl;
   #endif

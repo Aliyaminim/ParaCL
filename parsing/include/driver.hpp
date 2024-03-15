@@ -32,7 +32,7 @@ public:
     }
 
     template <typename NodeType, typename... Args>
-    AST::base_ast_node *make_node(Args&&... args) {
+    auto *make_node(Args&&... args) {
         auto node = ast_->make_node<NodeType>(std::forward<Args>(args)...);
         //
         return node;

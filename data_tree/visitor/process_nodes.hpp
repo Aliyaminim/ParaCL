@@ -1,10 +1,6 @@
 #pragma once
 
-#include "tree.hpp"
-#include "print_function.hpp"
-#include "number_node.hpp"
-#include "assignment.hpp"
-#include "binary_operations.hpp"
+#include "ast_nodes_include.hpp"
 
 namespace AST {
     VAL_TYPE func_node_print::process_node(){

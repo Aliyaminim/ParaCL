@@ -9,7 +9,7 @@ class assignment_expr : public base_expr_node {
     std::vector<variable_expr*> lhs;
     base_expr_node* rhs;
 public:
-    assignment_expr(variable_expr* v, base_expr_node* r) : rhs(r) { lhs.push_back(v); }
+    explicit assignment_expr(variable_expr* v, base_expr_node* r) : rhs(r) { lhs.push_back(v); }
 
     void add_var(variable_expr* var) {
         lhs.push_back(var);
