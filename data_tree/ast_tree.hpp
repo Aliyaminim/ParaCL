@@ -4,15 +4,15 @@
 #include "scope_node.hpp"
 
 namespace AST {
-    class astree {
-    base_ast_node * root = nullptr;
+class astree {
+    scope_node* root = nullptr;
 
-    public:
-        template <typename NodeType, typename... t_args> base_ast_node* make_node(t_args && ... args){
-            auto new_node = new NodeType(std::forward<t_args>(args)...);
-            return new_node;
-        }
+public:
+    template <typename NodeType, typename... t_args> base_ast_node* make_node(t_args && ... args){
+        auto new_node = new NodeType(std::forward<t_args>(args)...);
+        return new_node;
+    }
 
-    void set_root(AST::base_ast_node* ptr) { root = ptr; }
+    void set_root(scope_node* ptr) { root = ptr; }
 };
 }
