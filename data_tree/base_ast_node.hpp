@@ -5,9 +5,14 @@ using VAL_TYPE = int;
 
 namespace AST {
     class base_ast_node {
+        base_ast_node_type ast_type;
     public:
         base_ast_node() {}
         virtual ~base_ast_node() {}
+
+        base_ast_node_type get_ast_type(){
+            return ast_type;
+        }
     };
 
     class base_expr_node: public base_ast_node {

@@ -16,5 +16,8 @@ namespace AST {
         }
 
         base_expr_node* get_rhs(){ return rhs; }
+
+        std::vector<variable_expr*>* get_lhs(){return &lhs;};
+
     };
 }

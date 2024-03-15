@@ -15,5 +15,7 @@ namespace AST {
         scope_node* get_parent_scope() { return parent_scope; }
         void set_parent_scope(scope_node* p) { parent_scope = p; }
         void set_stmts(std::vector<base_ast_node*> cont) { container_stmts = cont; }
+
+        std::vector<base_ast_node*>* get_container(){return &container_stmts;};
     };
 }

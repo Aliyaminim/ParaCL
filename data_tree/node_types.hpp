@@ -35,5 +35,10 @@ namespace AST{
         IF_STMT,
         WHILE_STMT,
     };
+
+    enum class base_ast_node_type {
+        STMT,
+        EXPR,
+    };
     
 }

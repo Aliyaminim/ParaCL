@@ -13,6 +13,11 @@ namespace AST {
         VAL_TYPE get_value(){
             return value;
         }
+
+        void set_value(VAL_TYPE res){                   // поместить в private
+            value = res;
+            return;
+        }
     };
 }
 

@@ -14,5 +14,17 @@ namespace AST {
 
         if_stmt(base_expr_node* cond_, scope_node* true_scope_) :
             condition(cond_), true_scope(true_scope_) {}
+        
+        base_expr_node* get_condition(){
+            return condition;
+        }
+
+        scope_node* get_true_scope(){
+            return true_scope;
+        }
+
+        scope_node* get_else_scope(){
+            return else_scope;
+        }
     };
 }

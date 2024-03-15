@@ -3,8 +3,10 @@
 #include "ast_nodes_include.hpp"
 #include <iostream>
 
+// Добавить везде проверки на nullptr
+
 namespace AST {
-    class Visitor final{
+    class Visitor final : private variable_expr{
 
     public:
 
@@ -53,7 +55,8 @@ namespace AST {
                 else {return eval(X->get_lhs()) / eval(X->get_rhs());}
                 break;
             case binary_oper::BINARY_MOD:
-                return eval(X->get_lhs()) % eval(X->get_rhs());
+                if (eval(X->get_rhs()) == 0){ /* error*/ }
+                else {return eval(X->get_lhs()) % eval(X->get_rhs());}
                 break;
             case binary_oper::BINARY_EQU:
                 return eval(X->get_lhs()) == eval(X->get_rhs());
@@ -115,12 +118,71 @@ namespace AST {
 
         VAL_TYPE eval(assignment_expr* X){
             VAL_TYPE res = eval(X->get_rhs());
+            for (auto i : *(X->get_lhs())){
+                i->set_value(res);
+            }
             return res;
         }
 
         VAL_TYPE eval(variable_expr* X){
             VAL_TYPE res = X->get_value();
+            X->set_value(res);
             return res;
+        }
+
+        VAL_TYPE eval(base_ast_node * X){
+            switch (X->get_ast_type())
+            {
+            case base_ast_node_type::EXPR:
+                base_expr_node * A = static_cast<base_expr_node*>(X);
+                return eval(A);
+                break;
+            case base_ast_node_type::STMT:
+                base_stmt_node * B = static_cast<base_stmt_node*>(X);
+                return eval(B);
+                break;
+            default:
+                break;
+            }
+        }
+
+        VAL_TYPE eval(scope_node* X){
+            for (auto i : *(X->get_container())){
+                eval(i);
+            }
+        }
+
+        VAL_TYPE eval(base_stmt_node* X){
+            switch (X->get_expr_type())
+            {
+            case base_stmt_node_type::IF_STMT:
+                if_stmt * A = static_cast<if_stmt*>(X);
+                return eval(A);
+                break;
+            case base_stmt_node_type::WHILE_STMT:
+                while_stmt * B = static_cast<while_stmt*>(X);
+                return eval(B);
+                break;
+            default:
+                break;
+            }
+        }
+
+        int eval(if_stmt* X){                       // return value изменить при анализе исключений
+            if (eval(X->get_condition())){
+                eval(X->get_true_scope());
+            }
+            else{
+                eval(X->get_else_scope());
+            }
+            return 0;
+        }
+
+        int eval(while_stmt* X){                       // return value изменить при анализе исключений
+            while (eval(X->get_condition())){
+                eval(X->get_scope());
+            }
+            return 0;
         }
     };
 }
