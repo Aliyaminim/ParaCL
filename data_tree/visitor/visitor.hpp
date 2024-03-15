@@ -9,7 +9,16 @@ namespace AST {
     public:
 
         VAL_TYPE eval(base_expr_node * X){
-
+            switch (X->get_type())
+            {
+            case base_expr_node_type::ASSIGNMENT:
+                assignment_expr * Y = static_cast<assignment_expr*>(X);
+                
+                break;
+            
+            default:
+                break;
+            }
         }
 
         VAL_TYPE eval(binary_expr* X, binary_oper t){

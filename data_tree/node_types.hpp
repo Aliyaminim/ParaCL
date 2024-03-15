@@ -14,7 +14,7 @@ namespace AST{
         BINARY_GREATER_EQU,
         BINARY_LESS_EQU,
         BINARY_OR,
-        BINARY_AND
+        BINARY_AND,
     };
 
     enum class unary_oper {
@@ -22,4 +22,18 @@ namespace AST{
         UNARY_MINUS,
         UNARY_NOT,
     };
+
+    enum class base_expr_node_type {
+        ASSIGNMENT,
+        BINARY_EXPR,
+        UNARY_EXPR,
+        NUMBER_EXPR,
+        VAR_EXPR,
+    };
+
+    enum class base_stmt_node_type {
+        IF_STMT,
+        WHILE_STMT,
+    };
+    
 }
