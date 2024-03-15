@@ -1,3 +1,5 @@
+#pragma once
+
 namespace AST{
 enum class binary_oper {
     BINARY_ADD,

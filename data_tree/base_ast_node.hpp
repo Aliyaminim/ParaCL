@@ -10,6 +10,6 @@ public:
     virtual ~base_ast_node() {}
 };
 
-class base_expr_node: public base_ast_node {}
-class base_stmt_node: public base_ast_node {}
+class base_expr_node: public base_ast_node {};
+class base_stmt_node: public base_ast_node {};
 }

@@ -1,18 +1,16 @@
 #pragma once
 
-#include "tree.hpp"
-#include "value_expressions.hpp"
+#include "base_ast_node.hpp"
 #include "scope_node.hpp"
 
 namespace AST {
-class while_stmt : public base_ast_node {
+class while_stmt : public base_stmt_node {
 
-    value_expression* condition = nullptr;
+    base_expr_node* condition = nullptr;
     scope_node* scope = nullptr;
 
 public:
-    while_stmt(value_expression* cond_, scope_node* scope_) :
+    explicit while_stmt(base_expr_node* cond_ = nullptr, scope_node* scope_ = nullptr) :
         condition(cond_), scope(scope_) {}
-
 };
 }
