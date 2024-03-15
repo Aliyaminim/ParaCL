@@ -14,5 +14,7 @@ namespace AST {
         void add_var(variable_expr* var) {
             lhs.push_back(var);
         }
+
+        base_expr_node* get_rhs(){ return rhs; }
     };
 }

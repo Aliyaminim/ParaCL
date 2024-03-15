@@ -1,6 +1,7 @@
 #pragma once
 
 using VAL_TYPE = int;
+#include "node_types.hpp"
 
 namespace AST {
     class base_ast_node {
@@ -10,18 +11,18 @@ namespace AST {
     };
 
     class base_expr_node: public base_ast_node {
-        base_expr_node_type t;
+        base_expr_node_type ex_type;
     public:
-        base_expr_node_type get_type(){
-            return t;
+        base_expr_node_type get_expr_type(){
+            return ex_type;
         }
     };
-    
+
     class base_stmt_node: public base_ast_node {
-        base_stmt_node_type t;
+        base_stmt_node_type ex_type;
     public:
-        base_stmt_node_type get_type(){
-            return t;
+        base_stmt_node_type get_expr_type(){
+            return ex_type;
         }
     };
 }
