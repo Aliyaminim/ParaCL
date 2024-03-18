@@ -15,7 +15,7 @@ int main() {
         AST::Visitor vis{};
         std::cout << vis.eval(root);
     }
-    catch(const std::runtime_error& e)
+    catch(const std::exception& e)
     {
         std::cout << e.what() << std::endl;
         ret = 1;
