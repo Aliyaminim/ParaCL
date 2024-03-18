@@ -142,6 +142,7 @@ stmt: expr_stmt { $$ = $1; }
 | scope { $$ = $1; }
 | while_stmt { $$ = $1; }
 | if_stmt { $$ = $1; }
+| SCOLON
 ;
 
 expr_stmt: expr SCOLON { $$ = $1; }
