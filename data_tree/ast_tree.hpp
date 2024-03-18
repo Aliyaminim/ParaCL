@@ -14,5 +14,6 @@ namespace AST {
         }
 
         void set_root(scope_node* ptr) {root = ptr; }
+        auto get_root() { return root; }
     };
 }

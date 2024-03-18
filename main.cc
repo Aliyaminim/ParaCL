@@ -10,6 +10,7 @@ int main() {
     Driver driver{};
     try {
         driver.parse();
+        auto root = driver.get_ast_root();
     }
     catch(const std::runtime_error& e)
     {

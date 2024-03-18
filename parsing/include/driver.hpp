@@ -20,6 +20,8 @@ namespace yy {
             ast_->set_root(ptr);
         }
 
+        auto get_ast_root() { return ast_->get_root(); }
+
         parser::symbol_type yylex() {
             parser::symbol_type tt = static_cast<parser::symbol_type>(plex->get_token());
             return tt;
