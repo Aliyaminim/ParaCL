@@ -8,7 +8,7 @@ namespace AST {
         std::string name;
         VAL_TYPE value;
     public:
-        explicit variable_expr(std::string nm) : name(nm) {}
+        explicit variable_expr(std::string nm) : base_expr_node(base_expr_node_type::VAR_EXPR), name(nm) {}
 
         VAL_TYPE get_value(){
             return value;

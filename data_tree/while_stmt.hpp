@@ -8,7 +8,7 @@ namespace AST {
         base_expr_node* condition = nullptr;
         scope_node* scope = nullptr;
     public:
-        explicit while_stmt(base_expr_node* cond_ = nullptr, scope_node* scope_ = nullptr) :
+        explicit while_stmt(base_expr_node* cond_ = nullptr, scope_node* scope_ = nullptr) : base_stmt_node(base_stmt_node_type::WHILE_STMT),
             condition(cond_), scope(scope_) {}
         
         base_expr_node* get_condition(){

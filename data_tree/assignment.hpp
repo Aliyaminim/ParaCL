@@ -9,7 +9,7 @@ namespace AST {
         std::vector<variable_expr*> lhs;
         base_expr_node* rhs;
     public:
-        explicit assignment_expr(variable_expr* v, base_expr_node* r) : rhs(r) { lhs.push_back(v); }
+        explicit assignment_expr(variable_expr* v, base_expr_node* r) : base_expr_node(base_expr_node_type::ASSIGNMENT), rhs(r) { lhs.push_back(v); }
 
         void add_var(variable_expr* var) {
             lhs.push_back(var);

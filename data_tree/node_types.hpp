@@ -42,6 +42,7 @@ namespace AST{
     enum class base_ast_node_type {
         STMT,
         EXPR,
+        SCOPE,
     };
     
 }

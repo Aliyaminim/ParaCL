@@ -6,7 +6,7 @@ namespace AST {
     class number_expr : public base_expr_node {
         VAL_TYPE value;
     public:
-        explicit number_expr(VAL_TYPE v) : value(v) {}
+        explicit number_expr(VAL_TYPE v) : base_expr_node(base_expr_node_type::NUMBER_EXPR), value(v) {}
 
         VAL_TYPE get_value() const { return value; }
     };

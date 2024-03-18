@@ -10,7 +10,7 @@ namespace AST {
         base_expr_node *rhs;
 
     public:
-        explicit binary_expr(binary_oper t, base_expr_node* l = nullptr, base_expr_node* r = nullptr) : bin_type(t),
+        explicit binary_expr(binary_oper t, base_expr_node* l = nullptr, base_expr_node* r = nullptr) : base_expr_node(base_expr_node_type::BINARY_EXPR), bin_type(t),
             lhs(l), rhs(r) {}
 
         base_expr_node* get_lhs(){ return lhs; }
