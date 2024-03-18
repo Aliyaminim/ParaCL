@@ -10,6 +10,7 @@ namespace AST {
     public:
         explicit scope_node(std::vector<base_ast_node*> c, scope_node* p_sc = nullptr) : base_ast_node(base_ast_node_type::SCOPE),
             container_stmts(c), parent_scope(p_sc) {}
+        explicit scope_node(scope_node* p_sc = nullptr) : base_ast_node(base_ast_node_type::SCOPE), parent_scope(p_sc) {}
 
         scope_node* get_parent_scope() { return parent_scope; }
         void set_parent_scope(scope_node* p) { parent_scope = p; }
