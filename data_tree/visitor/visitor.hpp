@@ -3,8 +3,6 @@
 #include "ast_nodes_include.hpp"
 #include <iostream>
 
-// Обработка знака вопроса
-
 namespace AST {
     class Visitor final : private variable_expr{
 
@@ -34,6 +32,10 @@ namespace AST {
                 break;
             case base_expr_node_type::VAR_EXPR:
                 variable_expr * E = static_cast<variable_expr*>(X);
+                return eval(E);
+                break;
+            case base_expr_node_type::READ_EXPR:
+                read_expr * F = static_cast<read_expr*>(X);
                 return eval(E);
                 break;
             default:
@@ -219,6 +221,16 @@ namespace AST {
                 eval(X->get_scope());
             }
             return 0;
+        }
+
+        VAL_TYPE eval(read_expr * X){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
+            VAL_TYPE inp;
+            IBUF >> inp;
+            X->set_input(inp);
+            return inp;
         }
     };
 }
