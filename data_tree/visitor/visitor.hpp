@@ -3,7 +3,7 @@
 #include "ast_nodes_include.hpp"
 #include <iostream>
 
-// Добавить везде проверки на nullptr
+// Обработка знака вопроса
 
 namespace AST {
     class Visitor final : private variable_expr{
@@ -11,6 +11,9 @@ namespace AST {
     public:
 
         VAL_TYPE eval(base_expr_node * X){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             switch (X->get_expr_type())
             {
             case base_expr_node_type::ASSIGNMENT:
@@ -39,6 +42,9 @@ namespace AST {
         }
 
         VAL_TYPE eval(binary_expr* X, binary_oper t){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             switch (t)
             {
             case binary_oper::BINARY_ADD:
@@ -88,6 +94,9 @@ namespace AST {
         }
 
         VAL_TYPE eval(unary_expr* X, unary_oper t){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             switch (t)
             {
             case unary_oper::UNARY_MINUS:
@@ -106,17 +115,26 @@ namespace AST {
         }
 
         VAL_TYPE eval(print_stmt* X){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             VAL_TYPE res = eval(X->out_());
             OBUF << res;
             return res;
         }
 
         VAL_TYPE eval(number_expr* X){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             VAL_TYPE res = X->get_value();
             return res;
         }
 
         VAL_TYPE eval(assignment_expr* X){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             VAL_TYPE res = eval(X->get_rhs());
             for (auto i : *(X->get_lhs())){
                 i->set_value(res);
@@ -125,12 +143,18 @@ namespace AST {
         }
 
         VAL_TYPE eval(variable_expr* X){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             VAL_TYPE res = X->get_value();
             X->set_value(res);
             return res;
         }
 
         VAL_TYPE eval(base_ast_node * X){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             switch (X->get_ast_type())
             {
             case base_ast_node_type::EXPR:
@@ -147,12 +171,18 @@ namespace AST {
         }
 
         VAL_TYPE eval(scope_node* X){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             for (auto i : *(X->get_container())){
                 eval(i);
             }
         }
 
         VAL_TYPE eval(base_stmt_node* X){
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             switch (X->get_expr_type())
             {
             case base_stmt_node_type::IF_STMT:
@@ -169,6 +199,9 @@ namespace AST {
         }
 
         int eval(if_stmt* X){                       // return value изменить при анализе исключений
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             if (eval(X->get_condition())){
                 eval(X->get_true_scope());
             }
@@ -179,6 +212,9 @@ namespace AST {
         }
 
         int eval(while_stmt* X){                       // return value изменить при анализе исключений
+            if (X == nullptr){
+                throw "nullptr_node_arg";
+            }
             while (eval(X->get_condition())){
                 eval(X->get_scope());
             }
