@@ -14,13 +14,15 @@ namespace AST{
         BINARY_GREATER_EQU,
         BINARY_LESS_EQU,
         BINARY_OR,
-        BINARY_AND,
+        BINARY_AND,     // Остались битовые операторы(+ бит сдвига) и запятая
     };
 
     enum class unary_oper {
         UNARY_PLUS,
         UNARY_MINUS,
         UNARY_NOT,
+        UNARY_DOUBLE_MINUS,
+        UNARY_DOUBLE_PLUS,      // Запятая
     };
 
     enum class base_expr_node_type {

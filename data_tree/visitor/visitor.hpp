@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace AST {
-    class Visitor final : private variable_expr{
+    class Visitor final{
 
     public:
 
@@ -14,32 +14,33 @@ namespace AST {
             }
             switch (X->get_expr_type())
             {
-            case base_expr_node_type::ASSIGNMENT:
+            case base_expr_node_type::ASSIGNMENT:{
                 assignment_expr * A = static_cast<assignment_expr*>(X);
                 return eval(A);
-                break;
-            case base_expr_node_type::BINARY_EXPR:
+                break;}
+            case base_expr_node_type::BINARY_EXPR:{
                 binary_expr * B = static_cast<binary_expr*>(X);
                 return eval(B, B->get_bin_type());
-                break;
-            case base_expr_node_type::NUMBER_EXPR:
+                break;}
+            case base_expr_node_type::NUMBER_EXPR:{
                 number_expr * C = static_cast<number_expr*>(X);
                 return eval(C);
-                break;
-            case base_expr_node_type::UNARY_EXPR:
+                break;}
+            case base_expr_node_type::UNARY_EXPR:{
                 unary_expr * D = static_cast<unary_expr*>(X);
                 return eval(D, D->get_un_type());
-                break;
-            case base_expr_node_type::VAR_EXPR:
+                break;}
+            case base_expr_node_type::VAR_EXPR:{
                 variable_expr * E = static_cast<variable_expr*>(X);
                 return eval(E);
-                break;
-            case base_expr_node_type::READ_EXPR:
+                break;}
+            case base_expr_node_type::READ_EXPR:{
                 read_expr * F = static_cast<read_expr*>(X);
-                return eval(E);
-                break;
-            default:
-                break;
+                return eval(F);
+                break;}
+            default:{
+            return 0;
+                break;}
             }
         }
 
@@ -59,11 +60,15 @@ namespace AST {
                 return eval(X->get_lhs()) * eval(X->get_rhs());
                 break;
             case binary_oper::BINARY_DIV:
-                if (eval(X->get_rhs()) == 0){ /* error*/ }
+                if (eval(X->get_rhs()) == 0){
+                    throw "Division by zero!";
+                }
                 else {return eval(X->get_lhs()) / eval(X->get_rhs());}
                 break;
             case binary_oper::BINARY_MOD:
-                if (eval(X->get_rhs()) == 0){ /* error*/ }
+                if (eval(X->get_rhs()) == 0){
+                    throw "Division by zero!";
+                }
                 else {return eval(X->get_lhs()) % eval(X->get_rhs());}
                 break;
             case binary_oper::BINARY_EQU:
@@ -90,8 +95,9 @@ namespace AST {
             case binary_oper::BINARY_AND:
                 return eval(X->get_lhs()) && eval(X->get_rhs());
                 break;
-            default:
-                break;
+            default:{
+                return 0;
+                break;}
             }
         }
 
@@ -111,8 +117,9 @@ namespace AST {
                 return eval(X->get_rhs());
                 break;
             //...
-            default:
-                break;
+            default:{
+                return 0;
+                break;}
             }
         }
 
@@ -159,26 +166,28 @@ namespace AST {
             }
             switch (X->get_ast_type())
             {
-            case base_ast_node_type::EXPR:
+            case base_ast_node_type::EXPR:{
                 base_expr_node * A = static_cast<base_expr_node*>(X);
                 return eval(A);
-                break;
-            case base_ast_node_type::STMT:
+                break;}
+            case base_ast_node_type::STMT:{
                 base_stmt_node * B = static_cast<base_stmt_node*>(X);
                 return eval(B);
-                break;
-            default:
-                break;
+                break;}
+            default:{
+                return 0;
+                break;}
             }
         }
 
-        VAL_TYPE eval(scope_node* X){
+        int eval(scope_node* X){
             if (X == nullptr){
                 throw "nullptr_node_arg";
             }
             for (auto i : *(X->get_container())){
-                eval(i);
+                std::cout << eval(i);
             }
+            return 0;
         }
 
         VAL_TYPE eval(base_stmt_node* X){
@@ -187,16 +196,17 @@ namespace AST {
             }
             switch (X->get_expr_type())
             {
-            case base_stmt_node_type::IF_STMT:
+            case base_stmt_node_type::IF_STMT:{
                 if_stmt * A = static_cast<if_stmt*>(X);
                 return eval(A);
-                break;
-            case base_stmt_node_type::WHILE_STMT:
+                break;}
+            case base_stmt_node_type::WHILE_STMT:{
                 while_stmt * B = static_cast<while_stmt*>(X);
                 return eval(B);
-                break;
-            default:
-                break;
+                break;}
+            default:{
+                return 0;
+                break;}
             }
         }
 

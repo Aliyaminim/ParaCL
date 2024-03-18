@@ -2,6 +2,7 @@
 #include "driver.hpp"
 #include "lexer.hpp"
 #include <memory>
+#include "visitor.hpp"
 
 using namespace yy;
 
@@ -11,10 +12,12 @@ int main() {
     try {
         driver.parse();
         auto root = driver.get_ast_root();
+        AST::Visitor vis{};
+        std::cout << vis.eval(root);
     }
     catch(const std::runtime_error& e)
     {
-        std::cerr << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
         ret = 1;
     }
     return ret;
