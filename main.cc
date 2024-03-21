@@ -11,12 +11,12 @@ int main() {
     int ret = 0;
     Driver driver{};
     try {
-        driver.parse();
-        #ifdef EVAL
-        auto root = driver.get_ast_root();
-        AST::Visitor vis{};
-        std::cout << vis.eval(root);
-        #endif
+        auto ret = driver.parse();
+        if (ret) {
+            auto root = driver.get_ast_root();
+            AST::Visitor vis{};
+            std::cout << vis.eval(root);
+        }
     }
     catch(const std::exception& e)
     {
