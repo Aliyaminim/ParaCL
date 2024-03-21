@@ -5,6 +5,7 @@
 #include "visitor.hpp"
 
 using namespace yy;
+#define EVAL
 
 int main() {
     int ret = 0;

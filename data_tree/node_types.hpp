@@ -32,6 +32,7 @@ namespace AST{
         NUMBER_EXPR,
         VAR_EXPR,
         READ_EXPR,
+        PRINT_NODE,
     };
 
     enum class base_stmt_node_type {

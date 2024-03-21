@@ -7,7 +7,7 @@ namespace AST {
         base_expr_node *out;
 
     public:
-        explicit print_stmt(base_expr_node* out_ = nullptr) : base_expr_node(base_expr_node_type::READ_EXPR), out(out_) {}
+        explicit print_stmt(base_expr_node* out_ = nullptr) : base_expr_node(base_expr_node_type::PRINT_NODE), out(out_) {}
 
         base_expr_node* out_(){ return out; }
     };

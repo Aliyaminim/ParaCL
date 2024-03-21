@@ -15,31 +15,59 @@ namespace AST {
             switch (X->get_expr_type())
             {
             case base_expr_node_type::ASSIGNMENT:{
+                // #ifdef DEBUG_
+                // std::cout << "1\n";
+                // #endif
                 assignment_expr * A = static_cast<assignment_expr*>(X);
                 return eval(A);
                 break;}
             case base_expr_node_type::BINARY_EXPR:{
+                // #ifdef DEBUG_
+                // std::cout << "2\n";
+                // #endif
                 binary_expr * B = static_cast<binary_expr*>(X);
                 return eval(B, B->get_bin_type());
                 break;}
             case base_expr_node_type::NUMBER_EXPR:{
+                // #ifdef DEBUG_
+                // std::cout << "3\n";
+                // #ifdef DEBUG_
                 number_expr * C = static_cast<number_expr*>(X);
                 return eval(C);
                 break;}
             case base_expr_node_type::UNARY_EXPR:{
+                // #ifdef DEBUG_
+                // std::cout << "4\n";
+                // #endif
                 unary_expr * D = static_cast<unary_expr*>(X);
                 return eval(D, D->get_un_type());
                 break;}
             case base_expr_node_type::VAR_EXPR:{
+                // #ifdef DEBUG_
+                // std::cout << "5\n";
+                // #endif
                 variable_expr * E = static_cast<variable_expr*>(X);
                 return eval(E);
                 break;}
             case base_expr_node_type::READ_EXPR:{
+                // #ifdef DEBUG_
+                // std::cout << "6\n";
+                // #endif
                 read_expr * F = static_cast<read_expr*>(X);
                 return eval(F);
                 break;}
+            case base_expr_node_type::PRINT_NODE:{
+                // #ifdef DEBUG_
+                // std::cout << "7\n";
+                // #endif
+                print_stmt * G = static_cast<print_stmt*>(X);
+                return eval(G);
+                break;}
             default:{
-            return 0;
+                // #ifdef DEBUG_
+                // std::cout << "BADBADBAD\n";
+                // #endif
+                return 0;
                 break;}
             }
         }
@@ -128,7 +156,7 @@ namespace AST {
                 throw "nullptr_node_arg";
             }
             VAL_TYPE res = eval(X->out_());
-            OBUF << res;
+            OBUF << res << '\n';
             return res;
         }
 
@@ -185,7 +213,7 @@ namespace AST {
                 throw "nullptr_node_arg";
             }
             for (auto i : *(X->get_container())){
-                std::cout << eval(i);
+                eval(i);
             }
             return 0;
         }
