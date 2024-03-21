@@ -11,8 +11,8 @@ int main() {
     int ret = 0;
     Driver driver{};
     try {
-        auto ret = driver.parse();
-        if (ret) {
+        auto ret_parse = driver.parse();
+        if (ret_parse) {
             auto root = driver.get_ast_root();
             AST::Visitor vis{};
             std::cout << vis.eval(root);
