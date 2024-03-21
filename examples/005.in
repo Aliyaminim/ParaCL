@@ -6,5 +6,6 @@ else {
     print a;
 }
 
-while ( a + 1 <= 5) ;
+while ( a + 1 <= 5)
+    a = a + 1;
 

@@ -1,6 +1,7 @@
 %language "c++"
 %skeleton "lalr1.cc"
 %require "3.5"
+%header
 
 %defines
 %define api.token.raw
@@ -9,8 +10,10 @@
 %define api.parser.class { parser }
 %define api.namespace { yy }
 %define api.token.prefix {TOKEN_}
+%locations
+%define api.location.file "location.hpp"
 %define parse.lac full
-%define parse.error verbose
+%define parse.error detailed
 %define parse.trace
 
 %code requires
@@ -21,9 +24,6 @@
 
 //forward declaration
 namespace yy { class Driver; }
-#ifdef DEBUG
-    extern int debugg_num;
-#endif
 }
 
 %code {
@@ -142,7 +142,6 @@ stmt: expr_stmt { $$ = $1; }
 | scope { $$ = $1; }
 | while_stmt { $$ = $1; }
 | if_stmt { $$ = $1; }
-| SCOLON
 ;
 
 expr_stmt: expr SCOLON { $$ = $1; }
@@ -225,10 +224,7 @@ primary_expr: LPAREN expr RPAREN { $$ = $2; }
 
 %%
 
-void yy::parser::error(const std::string &msg) {
-  //std::cout << "Error occurred on line "  << curr_line  << std::endl;
-  #ifdef DEBUG
-    std::cout << "Maybe parsed wrongly number: " << debugg_num << std::endl;
-  #endif
-  throw std::runtime_error{msg};
+void yy::parser::error(const yy::parser::location_type& loc, const std::string& message) {
+    std::cerr << message << " in line " << loc.begin.line \
+                << " in column " << loc.begin.column << std::endl;
 }

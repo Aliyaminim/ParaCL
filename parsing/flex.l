@@ -1,11 +1,7 @@
 %option c++
 %{
-    /*definitions*/
     #include "lexer.hpp"
-    int curr_line = 1;
-    #ifdef DEBUG
-        int debugg_num = 0;
-    #endif
+    #include <string>
     #define yyterminate();
 %}
 
@@ -21,59 +17,52 @@ IDENTIFIER [a-zA-Z_][a-zA-Z_0-9]*
 /* rules */
 %%
 
-"\n"    {curr_line++; };
-{WS} /*for now do nothing*/
+[\n\r]+ { curr_pos.lines(yyleng); }
+[ \t]+  { curr_pos.columns(yyleng); }
 
-"if"    { return yy::parser::make_IF(); }
-"else"  { return yy::parser::make_ELSE(); }
-"while" { return yy::parser::make_WHILE(); }
-"print" { return yy::parser::make_PRINT(); }
-"?"     { return yy::parser::make_QMARK(); }
-"("     { return yy::parser::make_LPAREN(); }
-")"     { return yy::parser::make_RPAREN(); }
-"{"     { return yy::parser::make_LBRACE(); }
-"}"     { return yy::parser::make_RBRACE();}
-";"     { return yy::parser::make_SCOLON(); }
-":"     { return yy::parser::make_COLON(); }
-","     { return yy::parser::make_COMMA();}
+"if"    { return yy::parser::make_IF(upd_loc()); }
+"else"  { return yy::parser::make_ELSE(upd_loc()); }
+"while" { return yy::parser::make_WHILE(upd_loc()); }
+"print" { return yy::parser::make_PRINT(upd_loc()); }
+"?"     { return yy::parser::make_QMARK(upd_loc()); }
+"("     { return yy::parser::make_LPAREN(upd_loc()); }
+")"     { return yy::parser::make_RPAREN(upd_loc()); }
+"{"     { return yy::parser::make_LBRACE(upd_loc()); }
+"}"     { return yy::parser::make_RBRACE(upd_loc());}
+";"     { return yy::parser::make_SCOLON(upd_loc()); }
+":"     { return yy::parser::make_COLON(upd_loc()); }
+","     { return yy::parser::make_COMMA(upd_loc());}
 
-"+"     { return yy::parser::make_PLUS(); }
-"-"     { return yy::parser::make_MINUS(); }
-"*"     { return yy::parser::make_MULTIPLY(); }
-"/"     { return yy::parser::make_DIVIDE(); }
-"%"     { return yy::parser::make_MODULUS(); }
-"="     { return yy::parser::make_ASSIGN(); }
+"+"     { return yy::parser::make_PLUS(upd_loc()); }
+"-"     { return yy::parser::make_MINUS(upd_loc()); }
+"*"     { return yy::parser::make_MULTIPLY(upd_loc()); }
+"/"     { return yy::parser::make_DIVIDE(upd_loc()); }
+"%"     { return yy::parser::make_MODULUS(upd_loc()); }
+"="     { return yy::parser::make_ASSIGN(upd_loc()); }
 
-"=="    { return yy::parser::make_EQUAL(); }
-"!="    { return yy::parser::make_NOT_EQUAL(); }
-"<"     { return yy::parser::make_LESS(); }
-"<="    { return yy::parser::make_LESS_EQ(); }
-">"     { return yy::parser::make_GREATER(); }
-">="    { return yy::parser::make_GREATER_EQ(); }
+"=="    { return yy::parser::make_EQUAL(upd_loc()); }
+"!="    { return yy::parser::make_NOT_EQUAL(upd_loc()); }
+"<"     { return yy::parser::make_LESS(upd_loc()); }
+"<="    { return yy::parser::make_LESS_EQ(upd_loc()); }
+">"     { return yy::parser::make_GREATER(upd_loc()); }
+">="    { return yy::parser::make_GREATER_EQ(upd_loc()); }
 
-"&&"    { return yy::parser::make_AND(); }
-"||"    { return yy::parser::make_OR(); }
-"!"     { return yy::parser::make_NOT(); }
+"&&"    { return yy::parser::make_AND(upd_loc()); }
+"||"    { return yy::parser::make_OR(upd_loc()); }
+"!"     { return yy::parser::make_NOT(upd_loc()); }
 
-{IDENTIFIER}    {
-    #ifdef DEBUG
-        std::cout << "Variable's name is " << yytext << std::endl;
-    #endif
-    return yy::parser::make_VAR(yytext);
+{IDENTIFIER} {
+    return yy::parser::make_VAR(yytext, upd_loc());
 }
-{NUMBER}  {
-    #ifdef DEBUG
-    debugg_num = std::atoi(yytext);
-    #endif
-    return yy::parser::make_NUMBER(std::atoi(yytext));
+{NUMBER} {
+    return yy::parser::make_NUMBER(std::atoi(yytext), upd_loc());
 }
 
-.       {
-    #ifdef DEBUG
-        std::cout << yytext << std::endl;
-    #endif
-    throw yy::parser::syntax_error("Unknown symbol");
+. {
+  std::string msg = "unknown character '"; msg += yytext; msg += "'";
+  throw parser::syntax_error(upd_loc(), msg);
 }
-<<EOF>> { return yy::parser::make_EOF(); yyterminate();}
+
+<<EOF>> { return yy::parser::make_EOF(upd_loc()); yyterminate();}
 
 %%
