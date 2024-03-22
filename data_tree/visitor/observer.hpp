@@ -6,12 +6,12 @@
 #include <fstream>
 
 namespace AST {
-    class Visitor final{
+    class Observer final{
         VAL_TYPE curr_value = 0;
         astree* tree_;
         std::fstream ibuf;
     public:
-        Visitor(const std::string & filename): ibuf(std::fstream(filename)) {}
+        Observer(const std::string & filename): ibuf(std::fstream(filename)) {}
 
         VAL_TYPE eval(base_expr_node * X){
             if (X == nullptr){

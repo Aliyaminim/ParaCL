@@ -2,7 +2,7 @@
 #include "driver.hpp"
 #include "lexer.hpp"
 #include <memory>
-#include "visitor.hpp"
+#include "observer.hpp"
 
 using namespace yy;
 #define EVAL
@@ -15,8 +15,8 @@ int main() {
         auto ret_parse = driver.parse();
         if (ret_parse) {
             auto root = driver.get_ast_root();
-            AST::Visitor vis{filename};
-            vis.eval(root);
+            AST::Observer obs{filename};
+            obs.eval(root);
         }
     }
     catch(const std::exception& e)
