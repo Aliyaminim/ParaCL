@@ -4,13 +4,14 @@
 #include <iostream>
 #include <exception>
 #include <fstream>
+#include <cassert>
 
 namespace AST {
     class Observer final{
-        std::fstream ibuf;
-        std::fstream obuf;
+        std::istream& input_stream;
+        std::ostream& output_stream;
     public:
-        Observer(const std::string & infilename, const std::string & outfilename): ibuf(std::fstream(infilename)), obuf(std::fstream(outfilename)) {}
+        Observer(std::istream& in_, std::ostream& out_): input_stream(in_), output_stream(out_) {}
 
         VAL_TYPE eval(base_expr_node * X){
             if (X == nullptr){
@@ -153,8 +154,9 @@ namespace AST {
                 throw std::runtime_error("nullptr_node_arg");
             }
             VAL_TYPE res = eval(X->out_());
-            OBUF << res << '\n';
-            obuf << res << '\n';
+            // OBUF << res << '\n';
+            // obuf << res << '\n';
+            output_stream << res << std::endl;
             return res;
         }
 
@@ -263,7 +265,8 @@ namespace AST {
                 throw std::runtime_error("nullptr_node_arg");
             }
             VAL_TYPE inp;
-            ibuf >> inp;
+            input_stream >> inp;
+            assert(input_stream.good());
             X->set_input(inp);
             return inp;
         }

@@ -5,15 +5,19 @@
 #include "scope_node.hpp"
 #include "ast_tree.hpp"
 #include "base_ast_node.hpp"
+#include "./visitor/observer.hpp"
 
 namespace yy {
     class Driver final {
         Lexer plex;
         AST::astree ast_;
         AST::scope_node* current_parsing_scope;
+        std::ifstream& input_stream;
     public:
-        Driver(): plex(Lexer()), ast_(AST::astree()),
-                    current_parsing_scope(ast_.get_root()) {}
+        Driver(std::ifstream& in): plex(Lexer()), ast_(AST::astree()),
+                    current_parsing_scope(ast_.get_root()), input_stream(in) {
+            plex.switch_streams(input_stream, std::cout);
+        }
 
         void set_ast_root(AST::scope_node* ptr) {
             ast_.set_root(ptr);
@@ -45,6 +49,11 @@ namespace yy {
 
         void reset_curr_parsing_scope() {
             current_parsing_scope = current_parsing_scope->get_parent_scope();
+        }
+
+        void evaluate() {
+            AST::Observer obs{std::cin, std::cout};
+            obs.eval(ast_.get_root());
         }
     };
 } //namespace yy
