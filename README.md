@@ -14,7 +14,7 @@ cmake --build .
 ./ParaCL < [file]
 ```
 
-## How to test program
+## How to test the program
 ```bash
 make -s test
 ```
