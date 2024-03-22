@@ -10,11 +10,12 @@ using namespace yy;
 int main() {
     int ret = 0;
     Driver driver{};
+    std::string filename{"examples/input/base_test.in"};
     try {
         auto ret_parse = driver.parse();
         if (ret_parse) {
             auto root = driver.get_ast_root();
-            AST::Visitor vis{};
+            AST::Visitor vis{filename};
             vis.eval(root);
         }
     }

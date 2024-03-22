@@ -3,12 +3,15 @@
 #include "ast_nodes_include.hpp"
 #include <iostream>
 #include <exception>
+#include <fstream>
 
 namespace AST {
     class Visitor final{
         VAL_TYPE curr_value = 0;
         astree* tree_;
+        std::fstream ibuf;
     public:
+        Visitor(const std::string & filename): ibuf(std::fstream(filename)) {}
 
         VAL_TYPE eval(base_expr_node * X){
             if (X == nullptr){
@@ -189,7 +192,7 @@ namespace AST {
                 throw std::runtime_error("nullptr_node_arg");
             }
             auto var_scope = X->get_scope();
-            auto var_value = var_scope->get_var_value(var->name());
+            auto var_value = var_scope->get_var_value(X->name());
             return var_value;
             // scope_node* proc_scope = X->get_scope();
             // scope_node* var_scope = nullptr;
@@ -278,7 +281,7 @@ namespace AST {
                 throw std::runtime_error("nullptr_node_arg");
             }
             VAL_TYPE inp;
-            IBUF >> inp;
+            ibuf >> inp;
             X->set_input(inp);
             return inp;
         }

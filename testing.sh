@@ -4,7 +4,7 @@ echo Testing has started!
 echo
 for file in examples/working/*.in; do
     echo $file
-    valgrind ./build/ParaCL < $file
+    valgrind ./build/ParaCL < $file 
     echo
 done
 
