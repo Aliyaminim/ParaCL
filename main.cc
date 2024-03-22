@@ -15,7 +15,7 @@ int main() {
         if (ret_parse) {
             auto root = driver.get_ast_root();
             AST::Visitor vis{};
-            std::cout << vis.eval(root);
+            vis.eval(root);
         }
     }
     catch(const std::exception& e)

@@ -6,7 +6,8 @@
 
 namespace AST {
     class Visitor final{
-
+        VAL_TYPE curr_value = 0;
+        astree* tree_;
     public:
 
         VAL_TYPE eval(base_expr_node * X){
@@ -176,6 +177,8 @@ namespace AST {
             VAL_TYPE res = eval(X->get_rhs());
             for (auto i : *(X->get_lhs())){
                 i->set_value(res);
+                (i->get_scope())->set(i->name(), res);
+                (i->get_scope())->declare(i->name());
             }
             return res;
         }
@@ -184,9 +187,14 @@ namespace AST {
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
-            VAL_TYPE res = X->get_value();
-            X->set_value(res);
-            return res;
+            scope_node* proc_scope = X->get_scope();
+            scope_node* var_scope = nullptr;
+            if ((var_scope = (proc_scope->find_var(X->name()))) != nullptr){
+                return var_scope->get_var_value(X->name());
+            }
+            // VAL_TYPE res = X->get_value();
+            // X->set_value(res);
+            return 0;
         }
 
         VAL_TYPE eval(base_ast_node * X){
