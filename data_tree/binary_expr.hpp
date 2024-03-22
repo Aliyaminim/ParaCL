@@ -13,10 +13,10 @@ namespace AST {
         explicit binary_expr(binary_oper t, base_expr_node* l = nullptr, base_expr_node* r = nullptr) : base_expr_node(base_expr_node_type::BINARY_EXPR), bin_type(t),
             lhs(l), rhs(r) {}
 
-        base_expr_node* get_lhs(){ return lhs; }
-        base_expr_node* get_rhs(){ return rhs; }
+        base_expr_node* get_lhs() const noexcept { return lhs; }
+        base_expr_node* get_rhs() const noexcept { return rhs; }
 
-        binary_oper get_bin_type(){
+        binary_oper get_bin_type() const noexcept {
             return bin_type;
         }
     };

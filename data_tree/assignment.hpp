@@ -15,16 +15,11 @@ namespace AST {
         assignment_expr(variable_expr* v, base_expr_node* r, scope_node* curr_sc_) :
             base_expr_node(base_expr_node_type::ASSIGNMENT), rhs(r), curr_scope(curr_sc_)
         {   lhs.push_back(v);
-            #ifdef DEBUG
-            assert(curr_scope != nullptr);
-            assert(v != nullptr);
-            #endif
             curr_scope->declare(v->name());
         }
 
         void add_var(variable_expr* var) {
             lhs.push_back(var);
-
             curr_scope->declare(var->name());
         }
 
@@ -39,9 +34,9 @@ namespace AST {
             }
         }
 
-        base_expr_node* get_rhs(){ return rhs; }
+        base_expr_node* get_rhs() const noexcept { return rhs; }
 
-        std::vector<variable_expr*>* get_lhs(){return &lhs;};
+        std::vector<variable_expr*>* get_lhs() {return &lhs;};
 
     };
 }

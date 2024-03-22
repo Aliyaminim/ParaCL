@@ -14,7 +14,7 @@ namespace AST{
         BINARY_GREATER_EQU,
         BINARY_LESS_EQU,
         BINARY_OR,
-        BINARY_AND,     // Остались битовые операторы(+ бит сдвига) и запятая
+        BINARY_AND     // Остались битовые операторы(+ бит сдвига) и запятая
     };
 
     enum class unary_oper {
@@ -45,5 +45,5 @@ namespace AST{
         EXPR,
         SCOPE,
     };
-    
+
 }

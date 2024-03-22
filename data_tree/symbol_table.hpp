@@ -14,7 +14,7 @@ public:
 
   VAL_TYPE &operator[](const std::string &name) { return var_names[name]; }
 
-  std::unordered_map<std::string, VAL_TYPE>* get_vars() const noexcept { return &var_names; }
+  std::unordered_map<std::string, VAL_TYPE>* get_vars() { return &var_names; }
 
 };
 

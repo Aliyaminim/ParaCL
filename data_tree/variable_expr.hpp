@@ -21,7 +21,7 @@ namespace AST {
             return name_;
         }
 
-        scope_node* get_scope() const noexcept {
+        scope_node* get_scope() {
             return curr_scope->find_var(name_);
         }
 

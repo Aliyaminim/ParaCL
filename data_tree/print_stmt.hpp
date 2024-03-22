@@ -9,6 +9,6 @@ namespace AST {
     public:
         explicit print_stmt(base_expr_node* out_ = nullptr) : base_stmt_node(base_stmt_node_type::PRINT_STMT), out(out_) {}
 
-        base_expr_node* out_(){ return out; }
+        base_expr_node* out_() const noexcept { return out; }
     };
 }

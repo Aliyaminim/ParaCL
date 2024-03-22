@@ -13,5 +13,3 @@
 #include "variable_expr.hpp"
 #include "while_stmt.hpp"
 
-#define OBUF std::cout
-#define IBUF std::cin

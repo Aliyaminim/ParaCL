@@ -14,11 +14,11 @@ namespace AST {
             container_stmts(c), parent_scope(p_sc) {}
         explicit scope_node(scope_node* p_sc = nullptr) : base_ast_node(base_ast_node_type::SCOPE), parent_scope(p_sc) {}
 
-        scope_node* get_parent_scope() { return parent_scope; }
-        void set_parent_scope(scope_node* p) { parent_scope = p; }
+        scope_node* get_parent_scope() const noexcept { return parent_scope; }
+        void set_parent_scope(scope_node* p) noexcept { parent_scope = p; }
         void set_stmts(std::vector<base_ast_node*> cont) { container_stmts = cont; }
 
-        std::vector<base_ast_node*>* get_container(){return &container_stmts;};
+        std::vector<base_ast_node*>* get_container() {return &container_stmts;};
 
         scope_node* find_var(const std::string &name) {
             auto curr_scope = this;
@@ -31,7 +31,7 @@ namespace AST {
             return nullptr;
         }
 
-        bool contains(const std::string &name) { return symtab.contains(name); }
+        bool contains(const std::string &name) const { return symtab.contains(name); }
 
         void set(const std::string &name, VAL_TYPE val) { symtab[name] = val; }
 

@@ -8,6 +8,6 @@ namespace AST {
     public:
         explicit number_expr(VAL_TYPE v) : base_expr_node(base_expr_node_type::NUMBER_EXPR), value(v) {}
 
-        VAL_TYPE get_value() const { return value; }
+        VAL_TYPE get_value() const noexcept { return value; }
     };
 }
