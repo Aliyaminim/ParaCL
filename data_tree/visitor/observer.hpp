@@ -201,7 +201,8 @@ namespace AST {
                 break;}
             case base_ast_node_type::STMT:{
                 base_stmt_node * B = static_cast<base_stmt_node*>(X);
-                return eval(B);
+                eval(B);
+                return 0;
                 break;}
             default:{
                 return 0;
@@ -209,17 +210,16 @@ namespace AST {
             }
         }
 
-        int eval(scope_node* X){
+        void eval(scope_node* X){
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
             for (auto i : *(X->get_container())){
                 eval(i);
             }
-            return 0;
         }
 
-        VAL_TYPE eval(base_stmt_node* X){
+        void eval(base_stmt_node* X){
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
@@ -227,19 +227,18 @@ namespace AST {
             {
             case base_stmt_node_type::IF_STMT:{
                 if_stmt * A = static_cast<if_stmt*>(X);
-                return eval(A);
+                eval(A);
                 break;}
             case base_stmt_node_type::WHILE_STMT:{
                 while_stmt * B = static_cast<while_stmt*>(X);
-                return eval(B);
+                eval(B);
                 break;}
             default:{
-                return 0;
                 break;}
             }
         }
 
-        int eval(if_stmt* X){                       // return value изменить при анализе исключений
+        void eval(if_stmt* X){
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
@@ -249,17 +248,15 @@ namespace AST {
             else{
                 eval(X->get_else_scope());
             }
-            return 0;
         }
 
-        int eval(while_stmt* X){                       // return value изменить при анализе исключений
+        void eval(while_stmt* X){
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
             while (eval(X->get_condition())){
                 eval(X->get_scope());
             }
-            return 0;
         }
 
         VAL_TYPE eval(read_expr * X){
