@@ -59,13 +59,6 @@ namespace AST {
                 read_expr * F = static_cast<read_expr*>(X);
                 return eval(F);
                 break;}
-            case base_expr_node_type::PRINT_NODE:{
-                // #ifdef DEBUG_
-                // std::cout << "7\n";
-                // #endif
-                print_stmt * G = static_cast<print_stmt*>(X);
-                return eval(G);
-                break;}
             default:{
                 // #ifdef DEBUG_
                 // std::cout << "BADBADBAD\n";
@@ -232,6 +225,10 @@ namespace AST {
             case base_stmt_node_type::WHILE_STMT:{
                 while_stmt * B = static_cast<while_stmt*>(X);
                 eval(B);
+                break;}
+            case base_stmt_node_type::PRINT_STMT:{
+                print_stmt * C = static_cast<print_stmt*>(X);
+                eval(C);
                 break;}
             default:{
                 break;}

@@ -32,12 +32,12 @@ namespace AST{
         NUMBER_EXPR,
         VAR_EXPR,
         READ_EXPR,
-        PRINT_NODE,
     };
 
     enum class base_stmt_node_type {
         IF_STMT,
         WHILE_STMT,
+        PRINT_STMT,
     };
 
     enum class base_ast_node_type {
