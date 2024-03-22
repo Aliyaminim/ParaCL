@@ -8,7 +8,6 @@ while (i) {
     i = i - 1;
 }
 
-print a;
 {
     print a = 1;
 }
