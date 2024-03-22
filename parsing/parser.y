@@ -146,7 +146,7 @@ stmt: expr_stmt { $$ = $1; }
 expr_stmt: expr SCOLON { $$ = $1; }
 ;
 
-scope: open_brace stmts close_brace { $3->set_stmts($2); }
+scope: open_brace stmts close_brace { $3->set_stmts($2); $$ = $3; }
 ;
 
 open_brace: LBRACE {
