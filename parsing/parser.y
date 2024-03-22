@@ -127,9 +127,8 @@ parser::symbol_type yylex(Driver* driver) { return driver->yylex(); }
 %%
 
 program: stmts {
-    auto root = driver->make_node<AST::scope_node>($1);
-    driver->set_ast_root(root);
-    driver->set_curr_parsing_scope(root);
+    auto root = driver->get_ast_root();
+    root->set_stmts($1);
 }
 ;
 
@@ -160,6 +159,9 @@ open_brace: LBRACE {
 close_brace: RBRACE {
     $$ = driver->get_curr_parsing_scope();
     driver->reset_curr_parsing_scope();
+    #ifdef SYMTAB_TEST
+    $$->dump_vars();
+    #endif
 }
 ;
 
@@ -184,8 +186,11 @@ expr: assign_expr { $$ = $1; }
 | logic_expr { $$ = $1; }
 ;
 
-assign_expr: VAR ASSIGN assign_expr { $$ = $3; auto left = driver->make_node<AST::variable_expr>($1); $$->add_var(left); }
-| VAR ASSIGN logic_expr { auto left = driver->make_node<AST::variable_expr>($1); $$ = driver->make_node<AST::assignment_expr>(left, $3); }
+assign_expr: VAR ASSIGN assign_expr { $$ = $3; auto left = driver->make_node<AST::variable_expr>($1, driver->get_curr_parsing_scope()); $$->add_var(left); }
+| VAR ASSIGN logic_expr {
+    auto curr_scope = driver->get_curr_parsing_scope();
+    auto left = driver->make_node<AST::variable_expr>($1, curr_scope); $$ = driver->make_node<AST::assignment_expr>(left, $3, curr_scope);
+}
 ;
 
 logic_expr: logic_expr AND comp_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_AND, $1, $3); }
@@ -218,7 +223,7 @@ unary_expr: MINUS  primary_expr %prec UMINUS { $$ = driver->make_node<AST::unary
 
 primary_expr: LPAREN expr RPAREN { $$ = $2; }
 | NUMBER { $$ = driver->make_node<AST::number_expr>($1); }
-| VAR   { $$ = driver->make_node<AST::variable_expr>($1); }
+| VAR   { $$ = driver->make_node<AST::variable_expr>($1, driver->get_curr_parsing_scope()); }
 | QMARK { $$ = driver->make_node<AST::read_expr>(); }
 ;
 
