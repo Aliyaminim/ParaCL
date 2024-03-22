@@ -1,6 +1,6 @@
 # ParaCL interpreter
 
-##About
+## About
 ParaCL is a custom C-like language. This project provides an interpreter for the ParaCL language.
 
 The interpreter supports the following features:
@@ -11,7 +11,7 @@ The interpreter supports the following features:
 - ? scan statement
 - chainable assignment
 
-##Code example on ParaCL
+## Code example on ParaCL
 ```bash
 n = ?;
 fact = 1;
