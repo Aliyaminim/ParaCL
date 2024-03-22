@@ -10,13 +10,9 @@ namespace AST {
     public:
         explicit while_stmt(base_expr_node* cond_ = nullptr, scope_node* scope_ = nullptr) : base_stmt_node(base_stmt_node_type::WHILE_STMT),
             condition(cond_), scope(scope_) {}
-        
-        base_expr_node* get_condition(){
-            return condition;
-        }
 
-        scope_node* get_scope(){
-            return scope;
-        }
+        base_expr_node* get_condition() const noexcept { return condition; }
+
+        scope_node* get_scope() const noexcept { return scope; }
     };
 }

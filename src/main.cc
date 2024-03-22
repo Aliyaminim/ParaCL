@@ -1,11 +1,8 @@
 #include <stdexcept>
-#include "driver.hpp"
-#include "lexer.hpp"
 #include <filesystem>
-#include "observer.hpp"
+#include "driver.hpp"
 
 using namespace yy;
-#define EVAL
 
 int main(int argc, char** argv) {
     if (argc != 2) {

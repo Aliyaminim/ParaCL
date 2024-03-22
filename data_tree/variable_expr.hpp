@@ -13,20 +13,17 @@ namespace AST {
         explicit variable_expr(std::string nm, scope_node* curr_sc_) : base_expr_node(base_expr_node_type::VAR_EXPR),
             name_(nm), curr_scope(curr_sc_) {}
 
-        VAL_TYPE get_value(){
+        VAL_TYPE get_value() const noexcept {
             return value;
-        }
-
-        void set_value(VAL_TYPE res){                   // поместить в private
-            value = res;
-            return;
         }
 
         const std::string &name() const noexcept {
             return name_;
         }
 
-        scope_node* get_scope() { return curr_scope->find_var(name_); }
+        scope_node* get_scope() const noexcept {
+            return curr_scope->find_var(name_);
+        }
 
     };
 }

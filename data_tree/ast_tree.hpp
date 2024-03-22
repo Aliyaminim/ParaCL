@@ -23,7 +23,7 @@ namespace AST {
             return new_node_ptr;
         }
 
-        void set_root(scope_node* ptr) {root = ptr; }
-        auto get_root() { return root; }
+        void set_root(scope_node* ptr) noexcept {root = ptr; }
+        auto get_root() const noexcept { return root; }
     };
 }
