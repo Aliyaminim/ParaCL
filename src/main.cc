@@ -10,12 +10,13 @@ using namespace yy;
 int main() {
     int ret = 0;
     Driver driver{};
-    std::string filename{"../test/input.in"};
+    std::string infile{"../test/input.in"};
+    std::string outfile{"../test/output.out_"};
     try {
         auto ret_parse = driver.parse();
         if (ret_parse) {
             auto root = driver.get_ast_root();
-            AST::Observer obs{filename};
+            AST::Observer obs{infile, outfile};
             obs.eval(root);
         }
     }

@@ -8,8 +8,9 @@
 namespace AST {
     class Observer final{
         std::fstream ibuf;
+        std::fstream obuf;
     public:
-        Observer(const std::string & filename): ibuf(std::fstream(filename)) {}
+        Observer(const std::string & infilename, const std::string & outfilename): ibuf(std::fstream(infilename)), obuf(std::fstream(outfilename)) {}
 
         VAL_TYPE eval(base_expr_node * X){
             if (X == nullptr){
@@ -153,6 +154,7 @@ namespace AST {
             }
             VAL_TYPE res = eval(X->out_());
             OBUF << res << '\n';
+            obuf << res << '\n';
             return res;
         }
 
