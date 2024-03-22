@@ -3,15 +3,9 @@
 ## About
 ParaCL is a custom C-like language. This project provides an interpreter for the ParaCL language.
 
-The interpreter supports the following features:
-- arithmetic, logical, and comparison operations
-- while loop
-- if statement
-- print statement
-- ? scan statement
-- chainable assignment
+This project provides an interpreter for the ParaCL language.
 
-## Code example on ParaCL
+##Code snippet in ParaCL
 ```bash
 n = ?;
 fact = 1;
@@ -24,6 +18,14 @@ while (iter <= n) {
 
 print fact;
 ```
+
+##Supported language features
+- arithmetic, logical, and comparison operations
+- while loop
+- if statement
+- print statement
+- ? scan statement
+- chainable assignment
 
 ## How to build
 ```bash
