@@ -1,10 +1,10 @@
-border = ?;
-res = 1;
+n = ?;
+fact = 1;
 iter = 1;
 
-while (iter <= border) {
-    res = res * iter;
+while (iter <= n) {
+    fact = fact * iter;
     iter = iter + 1;
 }
 
-print (((res)));
+print (((fact)));
