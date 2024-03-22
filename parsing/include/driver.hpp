@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include "lexer.hpp"
 #include "parser.tab.hh"
 #include "scope_node.hpp"
@@ -9,21 +8,21 @@
 
 namespace yy {
     class Driver final {
-        std::unique_ptr<Lexer> plex;
-        std::unique_ptr<AST::astree> ast_;
+        Lexer plex;
+        AST::astree ast_;
         AST::scope_node* current_parsing_scope;
     public:
-        Driver(): plex(std::make_unique<Lexer>()), ast_(std::make_unique<AST::astree>()),
-                    current_parsing_scope(nullptr) {}
+        Driver(): plex(Lexer()), ast_(AST::astree()),
+                    current_parsing_scope(ast_.get_root()) {}
 
         void set_ast_root(AST::scope_node* ptr) {
-            ast_->set_root(ptr);
+            ast_.set_root(ptr);
         }
 
-        auto get_ast_root() { return ast_->get_root(); }
+        auto get_ast_root() { return ast_.get_root(); }
 
         parser::symbol_type yylex() {
-            parser::symbol_type tt = static_cast<parser::symbol_type>(plex->get_token());
+            parser::symbol_type tt = static_cast<parser::symbol_type>(plex.get_token());
             return tt;
         }
 
@@ -35,7 +34,7 @@ namespace yy {
 
         template <typename NodeType, typename... Args>
         auto *make_node(Args&&... args) {
-            auto node = ast_->make_node<NodeType>(std::forward<Args>(args)...);
+            auto node = ast_.make_node<NodeType>(std::forward<Args>(args)...);
             //
             return node;
         }
