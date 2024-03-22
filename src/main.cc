@@ -10,7 +10,7 @@ using namespace yy;
 int main() {
     int ret = 0;
     Driver driver{};
-    std::string filename{"examples/input/base_test.in"};
+    std::string filename{"../test/input.in"};
     try {
         auto ret_parse = driver.parse();
         if (ret_parse) {
