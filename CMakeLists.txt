@@ -59,7 +59,7 @@ set(BASH_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/test/testing.sh)
 add_custom_command(
     OUTPUT output_file
     COMMAND bash ${BASH_SCRIPT}
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/test
 )
 
 add_custom_target(test DEPENDS output_file)
