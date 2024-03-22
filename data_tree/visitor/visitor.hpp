@@ -188,14 +188,16 @@ namespace AST {
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
-            scope_node* proc_scope = X->get_scope();
-            scope_node* var_scope = nullptr;
-            if ((var_scope = (proc_scope->find_var(X->name()))) != nullptr){
-                return var_scope->get_var_value(X->name());
-            }
+            auto var_scope = X->get_scope();
+            auto var_value = var_scope->get_var_value(var->name());
+            return var_value;
+            // scope_node* proc_scope = X->get_scope();
+            // scope_node* var_scope = nullptr;
+            // if ((var_scope = (proc_scope->find_var(X->name()))) != nullptr){
+            //     return var_scope->get_var_value(X->name());
+            // }
             // VAL_TYPE res = X->get_value();
             // X->set_value(res);
-            return 0;
         }
 
         VAL_TYPE eval(base_ast_node * X){
