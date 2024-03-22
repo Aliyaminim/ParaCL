@@ -24,7 +24,7 @@ set(VIS_INCLUDE_DIR ./data_tree/visitor)
 set(INCLUDE_DIR ./parsing/include)
 set(PARSER ./parsing/parser.y)
 set(LEXER ./parsing/flex.l)
-set(SOURCES main.cc)
+set(SOURCES ./src/main.cc)
 
 flex_target(scanner
   ${LEXER}
@@ -52,3 +52,16 @@ add_executable(${PROJECT_NAME}
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
+#enable e2e testing
+set(BASH_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/test/testing.sh)
+
+add_custom_command(
+    OUTPUT output_file
+    COMMAND bash ${BASH_SCRIPT}
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+
+add_custom_target(test DEPENDS output_file)
+
+#make -C ./build test
