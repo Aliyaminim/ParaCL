@@ -4,5 +4,17 @@
 ```bash
 git clone https://github.com/Aliyaminim/ParaCL.git
 cd ParaCL
-bash run.sh
+cmake -S ./ -B build/
+cd build/
+cmake --build .
+```
+
+## How to run the program
+```bash
+./ParaCL < [file]
+```
+
+## How to test program
+```bash
+make -s test
 ```
