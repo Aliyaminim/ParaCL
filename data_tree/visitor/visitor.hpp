@@ -175,11 +175,12 @@ namespace AST {
                 throw std::runtime_error("nullptr_node_arg");
             }
             VAL_TYPE res = eval(X->get_rhs());
-            for (auto i : *(X->get_lhs())){
-                i->set_value(res);
-                (i->get_scope())->set(i->name(), res);
-                (i->get_scope())->declare(i->name());
-            }
+            X->define(res);
+            // for (auto i : *(X->get_lhs())){
+            //     i->set_value(res);
+            //     (i->get_scope())->set(i->name(), res);
+            //     (i->get_scope())->declare(i->name());
+            // }
             return res;
         }
 
