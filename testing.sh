@@ -16,6 +16,6 @@ echo -e "\e[1mTesting ill-formed paracl program\e[0m"
 echo
 for file in examples/wrong/*.in; do
 echo $file
-    ./build/ParaCL < $file
+    valgrind ./build/ParaCL < $file
     echo
 done
