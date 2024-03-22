@@ -7,8 +7,6 @@
 
 namespace AST {
     class Observer final{
-        VAL_TYPE curr_value = 0;
-        astree* tree_;
         std::fstream ibuf;
     public:
         Observer(const std::string & filename): ibuf(std::fstream(filename)) {}
@@ -179,11 +177,6 @@ namespace AST {
             }
             VAL_TYPE res = eval(X->get_rhs());
             X->define(res);
-            // for (auto i : *(X->get_lhs())){
-            //     i->set_value(res);
-            //     (i->get_scope())->set(i->name(), res);
-            //     (i->get_scope())->declare(i->name());
-            // }
             return res;
         }
 
@@ -194,13 +187,6 @@ namespace AST {
             auto var_scope = X->get_scope();
             auto var_value = var_scope->get_var_value(X->name());
             return var_value;
-            // scope_node* proc_scope = X->get_scope();
-            // scope_node* var_scope = nullptr;
-            // if ((var_scope = (proc_scope->find_var(X->name()))) != nullptr){
-            //     return var_scope->get_var_value(X->name());
-            // }
-            // VAL_TYPE res = X->get_value();
-            // X->set_value(res);
         }
 
         VAL_TYPE eval(base_ast_node * X){
