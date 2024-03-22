@@ -2,6 +2,7 @@
 
 #include "ast_nodes_include.hpp"
 #include <iostream>
+#include <exception>
 
 namespace AST {
     class Visitor final{
@@ -10,7 +11,7 @@ namespace AST {
 
         VAL_TYPE eval(base_expr_node * X){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             switch (X->get_expr_type())
             {
@@ -74,7 +75,7 @@ namespace AST {
 
         VAL_TYPE eval(binary_expr* X, binary_oper t){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             switch (t)
             {
@@ -89,13 +90,13 @@ namespace AST {
                 break;
             case binary_oper::BINARY_DIV:
                 if (eval(X->get_rhs()) == 0){
-                    throw "Division by zero!";
+                    throw std::runtime_error("Division by zero!");
                 }
                 else {return eval(X->get_lhs()) / eval(X->get_rhs());}
                 break;
             case binary_oper::BINARY_MOD:
                 if (eval(X->get_rhs()) == 0){
-                    throw "Division by zero!";
+                    throw std::runtime_error("Division by zero!");
                 }
                 else {return eval(X->get_lhs()) % eval(X->get_rhs());}
                 break;
@@ -131,7 +132,7 @@ namespace AST {
 
         VAL_TYPE eval(unary_expr* X, unary_oper t){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             switch (t)
             {
@@ -153,7 +154,7 @@ namespace AST {
 
         VAL_TYPE eval(print_stmt* X){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             VAL_TYPE res = eval(X->out_());
             OBUF << res << '\n';
@@ -162,7 +163,7 @@ namespace AST {
 
         VAL_TYPE eval(number_expr* X){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             VAL_TYPE res = X->get_value();
             return res;
@@ -170,7 +171,7 @@ namespace AST {
 
         VAL_TYPE eval(assignment_expr* X){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             VAL_TYPE res = eval(X->get_rhs());
             for (auto i : *(X->get_lhs())){
@@ -181,7 +182,7 @@ namespace AST {
 
         VAL_TYPE eval(variable_expr* X){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             VAL_TYPE res = X->get_value();
             X->set_value(res);
@@ -190,7 +191,7 @@ namespace AST {
 
         VAL_TYPE eval(base_ast_node * X){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             switch (X->get_ast_type())
             {
@@ -210,7 +211,7 @@ namespace AST {
 
         int eval(scope_node* X){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             for (auto i : *(X->get_container())){
                 eval(i);
@@ -220,7 +221,7 @@ namespace AST {
 
         VAL_TYPE eval(base_stmt_node* X){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             switch (X->get_expr_type())
             {
@@ -240,7 +241,7 @@ namespace AST {
 
         int eval(if_stmt* X){                       // return value изменить при анализе исключений
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             if (eval(X->get_condition())){
                 eval(X->get_true_scope());
@@ -253,7 +254,7 @@ namespace AST {
 
         int eval(while_stmt* X){                       // return value изменить при анализе исключений
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             while (eval(X->get_condition())){
                 eval(X->get_scope());
@@ -263,7 +264,7 @@ namespace AST {
 
         VAL_TYPE eval(read_expr * X){
             if (X == nullptr){
-                throw "nullptr_node_arg";
+                throw std::runtime_error("nullptr_node_arg");
             }
             VAL_TYPE inp;
             IBUF >> inp;
