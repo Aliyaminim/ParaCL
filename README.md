@@ -44,12 +44,7 @@ cmake --build .
 ./ParaCL [file]
 ```
 
-## How to test the program
+## How to test(end to end) the program
 ```bash
 make -s test
-```
-
-## How to test end to end the program
-```bash
-bash testing.sh
 ```
