@@ -76,51 +76,51 @@ namespace AST {
             }
             switch (t)
             {
-            case binary_oper::BINARY_ADD:
+            case binary_oper::BINARY_ADD:{
                 return eval(X->get_lhs()) + eval(X->get_rhs());
-                break;
-            case binary_oper::BINARY_SUB:
+                break;}
+            case binary_oper::BINARY_SUB:{
                 return eval(X->get_lhs()) - eval(X->get_rhs());
-                break;
-            case binary_oper::BINARY_MUL:
+                break;}
+            case binary_oper::BINARY_MUL:{
                 return eval(X->get_lhs()) * eval(X->get_rhs());
-                break;
-            case binary_oper::BINARY_DIV:
+                break;}
+            case binary_oper::BINARY_DIV:{
                 if (eval(X->get_rhs()) == 0){
                     throw std::runtime_error("Division by zero!");
                 }
                 else {return eval(X->get_lhs()) / eval(X->get_rhs());}
-                break;
-            case binary_oper::BINARY_MOD:
+                break;}
+            case binary_oper::BINARY_MOD:{
                 if (eval(X->get_rhs()) == 0){
                     throw std::runtime_error("Division by zero!");
                 }
                 else {return eval(X->get_lhs()) % eval(X->get_rhs());}
-                break;
-            case binary_oper::BINARY_EQU:
+                break;}
+            case binary_oper::BINARY_EQU:{
                 return eval(X->get_lhs()) == eval(X->get_rhs());
-                break;
-            case binary_oper::BINARY_NEQU:
+                break;}
+            case binary_oper::BINARY_NEQU:{
                 return eval(X->get_lhs()) != eval(X->get_rhs());
-                break;
-            case binary_oper::BINARY_GREATER:
+                break;}
+            case binary_oper::BINARY_GREATER:{
                 return eval(X->get_lhs()) > eval(X->get_rhs());
-                break;
-            case binary_oper::BINARY_LESS:
+                break;}
+            case binary_oper::BINARY_LESS:{
                 return eval(X->get_lhs()) < eval(X->get_rhs());
-                break;
-            case binary_oper::BINARY_GREATER_EQU:
+                break;}
+            case binary_oper::BINARY_GREATER_EQU:{
                 return eval(X->get_lhs()) >= eval(X->get_rhs());
-                break;
-            case binary_oper::BINARY_LESS_EQU:
+                break;}
+            case binary_oper::BINARY_LESS_EQU:{
                 return eval(X->get_lhs()) <= eval(X->get_rhs());
-                break;
-            case binary_oper::BINARY_OR:
+                break;}
+            case binary_oper::BINARY_OR:{
                 return eval(X->get_lhs()) || eval(X->get_rhs());
-                break;
-            case binary_oper::BINARY_AND:
+                break;}
+            case binary_oper::BINARY_AND:{
                 return eval(X->get_lhs()) && eval(X->get_rhs());
-                break;
+                break;}
             default:{
                 return 0;
                 break;}
@@ -252,7 +252,9 @@ namespace AST {
                 eval(X->get_true_scope());
             }
             else{
-                eval(X->get_else_scope());
+                if (X->get_else_scope() != nullptr){
+                    eval(X->get_else_scope());
+                }
             }
         }
 
