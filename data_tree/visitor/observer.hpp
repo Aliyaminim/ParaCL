@@ -5,6 +5,7 @@
 #include <exception>
 #include <fstream>
 #include <cassert>
+#include <string>
 
 namespace AST {
     class Observer final{
@@ -158,6 +159,11 @@ namespace AST {
                 throw std::runtime_error("nullptr_node_arg");
             }
             auto var_scope = X->get_scope();
+            if (!var_scope) {
+                std::string msg = "Variable is undeclared: ";
+                msg += X->name();
+                throw std::runtime_error(msg);
+            }
             auto var_value = var_scope->get_var_value(X->name());
             return var_value;
         }
