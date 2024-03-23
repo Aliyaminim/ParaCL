@@ -6,7 +6,7 @@ using namespace yy;
 
 int main(int argc, char** argv) {
     if (argc != 2) {
-        std::cerr << "ERROR:\n Please enter ./ParaCL <file>" << std::endl;
+        std::cerr << "ERROR:\nPlease enter: ./ParaCL <file>" << std::endl;
         return 1;
     } else if (!std::filesystem::is_regular_file(argv[1])) {
         std::cerr << "ERROR:\nCan't open file " << argv[1] << std::endl;
