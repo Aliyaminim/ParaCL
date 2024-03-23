@@ -48,3 +48,8 @@ cmake --build .
 ```bash
 make -s test
 ```
+
+## How to test end to end the program
+```bash
+bash testing.sh
+```
