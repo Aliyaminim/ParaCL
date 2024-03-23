@@ -14,7 +14,8 @@ namespace AST{
         BINARY_GREATER_EQU,
         BINARY_LESS_EQU,
         BINARY_OR,
-        BINARY_AND     // Остались битовые операторы(+ бит сдвига) и запятая
+        BINARY_AND,
+        BINARY_COMMA,   // For future development
     };
 
     enum class unary_oper {
@@ -22,7 +23,7 @@ namespace AST{
         UNARY_MINUS,
         UNARY_NOT,
         UNARY_DOUBLE_MINUS,
-        UNARY_DOUBLE_PLUS,      // Запятая
+        UNARY_DOUBLE_PLUS,
     };
 
     enum class base_expr_node_type {

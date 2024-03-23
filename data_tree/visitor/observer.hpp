@@ -20,51 +20,30 @@ namespace AST {
             switch (X->get_expr_type())
             {
             case base_expr_node_type::ASSIGNMENT:{
-                // #ifdef DEBUG_
-                // std::cout << "1\n";
-                // #endif
                 assignment_expr * A = static_cast<assignment_expr*>(X);
                 return eval(A);
                 break;}
             case base_expr_node_type::BINARY_EXPR:{
-                // #ifdef DEBUG_
-                // std::cout << "2\n";
-                // #endif
                 binary_expr * B = static_cast<binary_expr*>(X);
                 return eval(B, B->get_bin_type());
                 break;}
             case base_expr_node_type::NUMBER_EXPR:{
-                // #ifdef DEBUG_
-                // std::cout << "3\n";
-                // #ifdef DEBUG_
                 number_expr * C = static_cast<number_expr*>(X);
                 return eval(C);
                 break;}
             case base_expr_node_type::UNARY_EXPR:{
-                // #ifdef DEBUG_
-                // std::cout << "4\n";
-                // #endif
                 unary_expr * D = static_cast<unary_expr*>(X);
                 return eval(D, D->get_un_type());
                 break;}
             case base_expr_node_type::VAR_EXPR:{
-                // #ifdef DEBUG_
-                // std::cout << "5\n";
-                // #endif
                 variable_expr * E = static_cast<variable_expr*>(X);
                 return eval(E);
                 break;}
             case base_expr_node_type::READ_EXPR:{
-                // #ifdef DEBUG_
-                // std::cout << "6\n";
-                // #endif
                 read_expr * F = static_cast<read_expr*>(X);
                 return eval(F);
                 break;}
             default:{
-                // #ifdef DEBUG_
-                // std::cout << "BADBADBAD\n";
-                // #endif
                 return 0;
                 break;}
             }
@@ -142,7 +121,6 @@ namespace AST {
             case unary_oper::UNARY_PLUS:
                 return eval(X->get_rhs());
                 break;
-            //...
             default:{
                 return 0;
                 break;}
@@ -154,8 +132,6 @@ namespace AST {
                 throw std::runtime_error("nullptr_node_arg");
             }
             VAL_TYPE res = eval(X->out_());
-            // OBUF << res << '\n';
-            // obuf << res << '\n';
             output_stream << res << std::endl;
             return res;
         }
@@ -274,7 +250,6 @@ namespace AST {
             VAL_TYPE inp;
             input_stream >> inp;
             assert(input_stream.good());
-            X->set_input(inp);
             return inp;
         }
     };
