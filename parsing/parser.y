@@ -20,7 +20,7 @@
 {
 #include <iostream>
 #include <stdexcept>
-#include "data_tree/ast_nodes_include.hpp"
+#include "ast_tree/ast_nodes_include.hpp"
 
 //forward declaration
 namespace yy { class Driver; }

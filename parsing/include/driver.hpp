@@ -5,7 +5,7 @@
 #include "scope_node.hpp"
 #include "ast_tree.hpp"
 #include "base_ast_node.hpp"
-#include "./visitor/observer.hpp"
+#include "./observer/observer.hpp"
 
 namespace yy {
     class Driver final {
