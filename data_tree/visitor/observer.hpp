@@ -201,6 +201,11 @@ namespace AST {
                 eval(B);
                 return 0;
                 break;}
+            case base_ast_node_type::SCOPE:{
+                scope_node * C = static_cast<scope_node*>(X);
+                eval(C);
+                return 0;
+                break;}
             default:{
                 return 0;
                 break;}
