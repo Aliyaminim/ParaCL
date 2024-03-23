@@ -37,7 +37,7 @@ cmake --build .
 
 ## How to run the program
 ```bash
-./ParaCL < [file]
+./ParaCL [file]
 ```
 
 ## How to test the program
