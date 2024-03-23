@@ -27,7 +27,7 @@ done
 echo -e "\e[1mTesting ill-formed paracl program\e[0m"
 echo
 for file in ill_formed/*.in; do
-echo $file
+    echo $file
     ../build/ParaCL $file
     echo
 done
