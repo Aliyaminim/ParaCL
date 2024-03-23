@@ -48,7 +48,7 @@ namespace yy {
             current_parsing_scope = current_parsing_scope->get_parent_scope();
         }
 
-        void evaluate() {
+        void evaluate() const {
             AST::Observer obs{std::cin, std::cout};
             obs.eval(ast_.get_root());
         }
