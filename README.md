@@ -17,6 +17,10 @@ while (iter <= n) {
 
 print fact;
 ```
+To run it after(!!) building the program:
+```bash
+./ParaCL ./test/factorial.in
+```
 
 ## Supported language features
 - arithmetic, logical, and comparison operations
