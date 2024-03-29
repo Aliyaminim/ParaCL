@@ -58,6 +58,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z_0-9]*
     return yy::parser::make_NUMBER(std::atoi(yytext), upd_loc());
 }
 
+([//].*) { upd_loc(); }
+
 . {
   std::string msg = "unknown character '"; msg += yytext; msg += "'";
   throw parser::syntax_error(upd_loc(), msg);
