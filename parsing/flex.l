@@ -20,6 +20,8 @@ IDENTIFIER [a-zA-Z_][a-zA-Z_0-9]*
 [\n\r]+ { curr_pos.lines(yyleng); }
 [ \t]+  { curr_pos.columns(yyleng); }
 
+"//".* { upd_loc(); }
+
 "if"    { return yy::parser::make_IF(upd_loc()); }
 "else"  { return yy::parser::make_ELSE(upd_loc()); }
 "while" { return yy::parser::make_WHILE(upd_loc()); }
@@ -57,8 +59,6 @@ IDENTIFIER [a-zA-Z_][a-zA-Z_0-9]*
 {NUMBER} {
     return yy::parser::make_NUMBER(std::atoi(yytext), upd_loc());
 }
-
-([//].*) { upd_loc(); }
 
 . {
   std::string msg = "unknown character '"; msg += yytext; msg += "'";
