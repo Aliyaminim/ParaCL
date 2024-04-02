@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
         return 1;
     } else if (!std::filesystem::is_regular_file(argv[1])) {
         std::cerr << "ERROR:\nCan't open file " << argv[1] << std::endl;
+        return 1;
     }
     std::ifstream input_stream{argv[1]};
 

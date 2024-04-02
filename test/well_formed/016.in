@@ -1,0 +1,21 @@
+//first example
+a = 1;
+print a; //prints 1
+
+{
+    //nested scope
+    a = 2;
+    print a; //prints 2
+}
+
+print a; //prints 2, but we expect 1, don't we??
+
+//second example
+
+if (a > 0) {
+    a = 9;
+}
+
+print a;
+//prints 9 and we expect 9, so scopes in different contexts should be considered differently..
+// Am I wrong? The problem is how we should treat variables with the same name in nested scopes
