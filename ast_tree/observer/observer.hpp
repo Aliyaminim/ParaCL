@@ -117,7 +117,7 @@ namespace AST {
                 return -eval(X->get_rhs());
                 break;
             case unary_oper::UNARY_NOT:
-                return -eval(X->get_rhs());
+                return !eval(X->get_rhs());
                 break;
             case unary_oper::UNARY_PLUS:
                 return eval(X->get_rhs());
