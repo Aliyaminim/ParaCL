@@ -22,8 +22,8 @@ namespace AST{
         UNARY_PLUS,
         UNARY_MINUS,
         UNARY_NOT,
-        UNARY_DOUBLE_MINUS,
-        UNARY_DOUBLE_PLUS,
+        INCREMENT,
+        DECREMENT,
     };
 
     enum class base_expr_node_type {

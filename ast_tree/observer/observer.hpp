@@ -18,35 +18,35 @@ namespace AST {
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
+
             switch (X->get_expr_type())
             {
             case base_expr_node_type::ASSIGNMENT:{
                 assignment_expr * A = static_cast<assignment_expr*>(X);
-                return eval(A);
-                break;}
+                return eval(A);}
+
             case base_expr_node_type::BINARY_EXPR:{
                 binary_expr * B = static_cast<binary_expr*>(X);
-                return eval(B, B->get_bin_type());
-                break;}
+                return eval(B, B->get_bin_type());}
+
             case base_expr_node_type::NUMBER_EXPR:{
                 number_expr * C = static_cast<number_expr*>(X);
-                return eval(C);
-                break;}
+                return eval(C);}
+
             case base_expr_node_type::UNARY_EXPR:{
                 unary_expr * D = static_cast<unary_expr*>(X);
-                return eval(D, D->get_un_type());
-                break;}
+                return eval(D, D->get_un_type());}
+
             case base_expr_node_type::VAR_EXPR:{
                 variable_expr * E = static_cast<variable_expr*>(X);
-                return eval(E);
-                break;}
+                return eval(E);}
+
             case base_expr_node_type::READ_EXPR:{
                 read_expr * F = static_cast<read_expr*>(X);
-                return eval(F);
-                break;}
+                return eval(F);}
+
             default:{
-                return 0;
-                break;}
+                throw std::runtime_error("Switch cases classes broken!");}
             }
         }
 
@@ -54,56 +54,56 @@ namespace AST {
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
+
             switch (t)
             {
-            case binary_oper::BINARY_ADD:{
+            case binary_oper::BINARY_ADD:
                 return eval(X->get_lhs()) + eval(X->get_rhs());
-                break;}
-            case binary_oper::BINARY_SUB:{
+
+            case binary_oper::BINARY_SUB:
                 return eval(X->get_lhs()) - eval(X->get_rhs());
-                break;}
-            case binary_oper::BINARY_MUL:{
+
+            case binary_oper::BINARY_MUL:
                 return eval(X->get_lhs()) * eval(X->get_rhs());
-                break;}
+
             case binary_oper::BINARY_DIV:{
                 if (eval(X->get_rhs()) == 0){
                     throw std::runtime_error("Division by zero!");
                 }
-                else {return eval(X->get_lhs()) / eval(X->get_rhs());}
-                break;}
+                return eval(X->get_lhs()) / eval(X->get_rhs());}
+
             case binary_oper::BINARY_MOD:{
                 if (eval(X->get_rhs()) == 0){
                     throw std::runtime_error("Division by zero!");
                 }
-                else {return eval(X->get_lhs()) % eval(X->get_rhs());}
-                break;}
-            case binary_oper::BINARY_EQU:{
+                return eval(X->get_lhs()) % eval(X->get_rhs());}
+
+            case binary_oper::BINARY_EQU:
                 return eval(X->get_lhs()) == eval(X->get_rhs());
-                break;}
-            case binary_oper::BINARY_NEQU:{
+
+            case binary_oper::BINARY_NEQU:
                 return eval(X->get_lhs()) != eval(X->get_rhs());
-                break;}
-            case binary_oper::BINARY_GREATER:{
+
+            case binary_oper::BINARY_GREATER:
                 return eval(X->get_lhs()) > eval(X->get_rhs());
-                break;}
-            case binary_oper::BINARY_LESS:{
+
+            case binary_oper::BINARY_LESS:
                 return eval(X->get_lhs()) < eval(X->get_rhs());
-                break;}
-            case binary_oper::BINARY_GREATER_EQU:{
+
+            case binary_oper::BINARY_GREATER_EQU:
                 return eval(X->get_lhs()) >= eval(X->get_rhs());
-                break;}
-            case binary_oper::BINARY_LESS_EQU:{
+
+            case binary_oper::BINARY_LESS_EQU:
                 return eval(X->get_lhs()) <= eval(X->get_rhs());
-                break;}
-            case binary_oper::BINARY_OR:{
+
+            case binary_oper::BINARY_OR:
                 return eval(X->get_lhs()) || eval(X->get_rhs());
-                break;}
-            case binary_oper::BINARY_AND:{
+
+            case binary_oper::BINARY_AND:
                 return eval(X->get_lhs()) && eval(X->get_rhs());
-                break;}
-            default:{
-                return 0;
-                break;}
+
+            default:
+                throw std::runtime_error("Switch cases classes broken!");
             }
         }
 
@@ -115,16 +115,15 @@ namespace AST {
             {
             case unary_oper::UNARY_MINUS:
                 return -eval(X->get_rhs());
-                break;
+
             case unary_oper::UNARY_NOT:
                 return !eval(X->get_rhs());
-                break;
+
             case unary_oper::UNARY_PLUS:
                 return eval(X->get_rhs());
-                break;
-            default:{
-                return 0;
-                break;}
+
+            default:
+                throw std::runtime_error("Switch cases classes broken!");
             }
         }
 
@@ -176,21 +175,20 @@ namespace AST {
             {
             case base_ast_node_type::EXPR:{
                 base_expr_node * A = static_cast<base_expr_node*>(X);
-                return eval(A);
-                break;}
+                return eval(A);}
+
             case base_ast_node_type::STMT:{
                 base_stmt_node * B = static_cast<base_stmt_node*>(X);
                 eval(B);
-                return 0;
-                break;}
+                return 0;}
+
             case base_ast_node_type::SCOPE:{
                 scope_node * C = static_cast<scope_node*>(X);
                 eval(C);
-                return 0;
-                break;}
-            default:{
-                return 0;
-                break;}
+                return 0;}
+
+            default:
+                throw std::runtime_error("Switch cases classes broken!");
             }
         }
 
@@ -222,7 +220,7 @@ namespace AST {
                 eval(C);
                 break;}
             default:{
-                break;}
+                throw std::runtime_error("Switch cases classes broken!");}
             }
         }
 
