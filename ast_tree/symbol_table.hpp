@@ -2,19 +2,19 @@
 
 #include "base_ast_node.hpp"
 #include <unordered_map>
-#include <string>
+#include <string_view>
 
 namespace AST {
     class Symbol_table final {
-        std::unordered_map<std::string, VAL_TYPE> var_names;
+        std::unordered_map<std::string_view, VAL_TYPE> var_names;
     public:
-        bool contains(const std::string &name) const { return var_names.contains(name); }
+        bool contains(std::string_view name) const { return var_names.contains(name); }
 
-        void add(const std::string &name) { var_names.emplace(name, VAL_TYPE{}); }
+        void add(std::string_view name) { var_names.emplace(name, VAL_TYPE{}); }
 
-        VAL_TYPE &operator[](const std::string &name) { return var_names[name]; }
+        VAL_TYPE &operator[](std::string_view name) { return var_names[name]; }
 
-        std::unordered_map<std::string, VAL_TYPE>* get_vars() { return &var_names; }
+        std::unordered_map<std::string_view, VAL_TYPE>* get_vars() { return &var_names; }
 
     };
 

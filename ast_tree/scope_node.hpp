@@ -20,7 +20,7 @@ namespace AST {
 
         std::vector<base_ast_node*>* get_container() {return &container_stmts;};
 
-        scope_node* find_var(const std::string &name) {
+        scope_node* find_var(std::string_view name) {
             auto curr_scope = this;
             do {
                 if(curr_scope->contains(name))
@@ -31,18 +31,18 @@ namespace AST {
             return nullptr;
         }
 
-        bool contains(const std::string &name) const { return symtab.contains(name); }
+        bool contains(std::string_view name) const { return symtab.contains(name); }
 
-        void set(const std::string &name, VAL_TYPE val) { symtab[name] = val; }
+        void set(std::string_view name, VAL_TYPE val) { symtab[name] = val; }
 
-        void declare(const std::string &name) {
+        void declare(std::string_view name) {
             auto var_scope = find_var(name);
             if(!var_scope) {
                 symtab.add(name);
             }
         }
 
-        VAL_TYPE get_var_value(const std::string &name) { return symtab[name]; }
+        VAL_TYPE get_var_value(std::string_view name) { return symtab[name]; }
 
         void dump_vars() {
             auto curr_scope = this;
@@ -57,7 +57,7 @@ namespace AST {
             std::cout << std::endl;
         }
 
-        std::unordered_map<std::string, VAL_TYPE>* get_vars() { return symtab.get_vars(); }
+        std::unordered_map<std::string_view, VAL_TYPE>* get_vars() { return symtab.get_vars(); }
 
         virtual ~scope_node() {}
 
