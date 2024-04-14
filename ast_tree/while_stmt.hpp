@@ -14,5 +14,7 @@ namespace AST {
         base_expr_node* get_condition() const noexcept { return condition; }
 
         scope_node* get_scope() const noexcept { return scope; }
+
+        virtual ~while_stmt() {}
     };
 }

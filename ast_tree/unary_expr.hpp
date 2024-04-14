@@ -17,5 +17,7 @@ namespace AST {
         base_expr_node* get_rhs() const noexcept {
             return value;
         }
+
+        virtual ~unary_expr() {}
     };
 }

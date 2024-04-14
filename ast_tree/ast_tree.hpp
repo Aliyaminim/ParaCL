@@ -7,7 +7,7 @@
 
 
 namespace AST {
-    class astree {
+    class astree final{
         scope_node* root = nullptr;
         std::deque<std::unique_ptr<base_ast_node>> node_storage;
 

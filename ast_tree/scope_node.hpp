@@ -59,5 +59,7 @@ namespace AST {
 
         std::unordered_map<std::string, VAL_TYPE>* get_vars() { return symtab.get_vars(); }
 
+        virtual ~scope_node() {}
+
     };
 }

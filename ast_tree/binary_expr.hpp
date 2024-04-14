@@ -19,5 +19,7 @@ namespace AST {
         binary_oper get_bin_type() const noexcept {
             return bin_type;
         }
+
+        virtual ~binary_expr() {}
     };
 }

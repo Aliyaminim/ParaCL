@@ -25,5 +25,7 @@ namespace AST {
             return curr_scope->find_var(name_);
         }
 
+        virtual ~variable_expr() {}
+
     };
 }

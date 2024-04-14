@@ -38,5 +38,6 @@ namespace AST {
 
         std::vector<variable_expr*>* get_lhs() {return &lhs;};
 
+        virtual ~assignment_expr() {}
     };
 }

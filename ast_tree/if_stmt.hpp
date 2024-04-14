@@ -26,5 +26,7 @@ namespace AST {
         scope_node* get_else_scope() const noexcept {
             return else_scope;
         }
+
+        virtual ~if_stmt() {}
     };
 }

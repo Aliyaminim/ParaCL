@@ -27,7 +27,7 @@ namespace AST {
 
             case base_expr_node_type::BINARY_EXPR:{
                 binary_expr * B = static_cast<binary_expr*>(X);
-                return eval(B, B->get_bin_type());}
+                return eval(B);}
 
             case base_expr_node_type::NUMBER_EXPR:{
                 number_expr * C = static_cast<number_expr*>(X);
@@ -35,7 +35,7 @@ namespace AST {
 
             case base_expr_node_type::UNARY_EXPR:{
                 unary_expr * D = static_cast<unary_expr*>(X);
-                return eval(D, D->get_un_type());}
+                return eval(D);}
 
             case base_expr_node_type::VAR_EXPR:{
                 variable_expr * E = static_cast<variable_expr*>(X);
@@ -50,12 +50,12 @@ namespace AST {
             }
         }
 
-        VAL_TYPE eval(binary_expr* X, binary_oper t){
+        VAL_TYPE eval(binary_expr* X){
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
 
-            switch (t)
+            switch (X->get_bin_type())
             {
             case binary_oper::BINARY_ADD:
                 return eval(X->get_lhs()) + eval(X->get_rhs());
@@ -107,11 +107,11 @@ namespace AST {
             }
         }
 
-        VAL_TYPE eval(unary_expr* X, unary_oper t){
+        VAL_TYPE eval(unary_expr* X){
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
-            switch (t)
+            switch (X->get_un_type())
             {
             case unary_oper::UNARY_MINUS:
                 return -eval(X->get_rhs());
