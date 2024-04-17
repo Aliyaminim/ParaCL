@@ -36,7 +36,7 @@ namespace AST {
 
         base_expr_node* get_rhs() const noexcept { return rhs; }
 
-        std::vector<variable_expr*>* get_lhs() {return &lhs;};
+        const std::vector<variable_expr*>& get_lhs() const noexcept { return lhs; };
 
         virtual ~assignment_expr() {}
     };
