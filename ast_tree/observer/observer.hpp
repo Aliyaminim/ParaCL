@@ -46,7 +46,7 @@ namespace AST {
                 return eval(F);}
 
             default:{
-                throw std::runtime_error("Switch cases classes broken!");}
+                throw std::runtime_error("Unknown expression!");}
             }
         }
 
@@ -103,7 +103,7 @@ namespace AST {
                 return eval(X->get_lhs()) && eval(X->get_rhs());
 
             default:
-                throw std::runtime_error("Switch cases classes broken!");
+                throw std::runtime_error("Unknown binary expression!");
             }
         }
 
@@ -123,7 +123,7 @@ namespace AST {
                 return eval(X->get_rhs());
 
             default:
-                throw std::runtime_error("Switch cases classes broken!");
+                throw std::runtime_error("Unknown unary expression!");
             }
         }
 
@@ -188,7 +188,7 @@ namespace AST {
                 return 0;}
 
             default:
-                throw std::runtime_error("Switch cases classes broken!");
+                throw std::runtime_error("Unknown node type!");
             }
         }
 
@@ -220,7 +220,7 @@ namespace AST {
                 eval(C);
                 break;}
             default:{
-                throw std::runtime_error("Switch cases classes broken!");}
+                throw std::runtime_error("Unknown statement!");}
             }
         }
 
