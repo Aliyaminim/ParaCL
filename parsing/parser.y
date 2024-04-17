@@ -91,8 +91,8 @@ parser::symbol_type yylex(Driver* driver) { return driver->yylex(); }
     expr
     logic_expr
     comp_expr
-    arith_expr_1
-    arith_expr_2
+    additive_expr
+    multiplicative_expr
     unary_expr
     primary_expr
 ;
@@ -195,24 +195,24 @@ unary_expr: MINUS  primary_expr %prec UMINUS { $$ = driver->make_node<AST::unary
 | primary_expr { $$ = $1; }
 ;
 
-arith_expr_2: arith_expr_2 MULTIPLY unary_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_MUL, $1, $3); }
-| arith_expr_2 DIVIDE unary_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_DIV, $1, $3); }
-| arith_expr_2 MODULUS unary_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_MOD, $1, $3); }
+multiplicative_expr: multiplicative_expr MULTIPLY unary_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_MUL, $1, $3); }
+| multiplicative_expr DIVIDE unary_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_DIV, $1, $3); }
+| multiplicative_expr MODULUS unary_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_MOD, $1, $3); }
 | unary_expr { $$ = $1; }
 ;
 
-arith_expr_1: arith_expr_1 PLUS arith_expr_2 { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_ADD, $1, $3); }
-| arith_expr_1 MINUS arith_expr_2 { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_SUB, $1, $3); }
-| arith_expr_2 { $$ = $1; }
+additive_expr: additive_expr PLUS multiplicative_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_ADD, $1, $3); }
+| additive_expr MINUS multiplicative_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_SUB, $1, $3); }
+| multiplicative_expr { $$ = $1; }
 ;
 
-comp_expr: comp_expr EQUAL arith_expr_1 { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_EQU, $1, $3); }
-| comp_expr NOT_EQUAL arith_expr_1 { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_NEQU, $1, $3); }
-| comp_expr LESS arith_expr_1 { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_LESS, $1, $3); }
-| comp_expr LESS_EQ arith_expr_1 { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_LESS_EQU, $1, $3); }
-| comp_expr GREATER arith_expr_1 { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_GREATER, $1, $3); }
-| comp_expr GREATER_EQ arith_expr_1 { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_GREATER_EQU, $1, $3); }
-| arith_expr_1 { $$ = $1; }
+comp_expr: comp_expr EQUAL additive_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_EQU, $1, $3); }
+| comp_expr NOT_EQUAL additive_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_NEQU, $1, $3); }
+| comp_expr LESS additive_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_LESS, $1, $3); }
+| comp_expr LESS_EQ additive_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_LESS_EQU, $1, $3); }
+| comp_expr GREATER additive_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_GREATER, $1, $3); }
+| comp_expr GREATER_EQ additive_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_GREATER_EQU, $1, $3); }
+| additive_expr { $$ = $1; }
 ;
 
 logic_expr: logic_expr AND comp_expr { $$ = driver->make_node<AST::binary_expr>(AST::binary_oper::BINARY_AND, $1, $3); }
