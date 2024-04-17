@@ -163,9 +163,6 @@ open_brace: LBRACE {
 close_brace: RBRACE {
     $$ = driver->get_curr_parsing_scope();
     driver->reset_curr_parsing_scope();
-    #ifdef SYMTAB_TEST
-    $$->dump_vars();
-    #endif
 }
 ;
 
