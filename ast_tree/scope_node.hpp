@@ -42,22 +42,7 @@ namespace AST {
             }
         }
 
-        VAL_TYPE get_var_value(std::string_view name) { return symtab[name]; }
-
-        void dump_vars() {
-            auto curr_scope = this;
-            do {
-                std::cout << "{";
-                for(auto elem : *(curr_scope->get_vars()))
-                    std::cout << elem.first << " ";
-                std::cout << "}" << std::endl;
-
-                curr_scope = curr_scope->parent_scope;
-            } while(curr_scope);
-            std::cout << std::endl;
-        }
-
-        std::unordered_map<std::string_view, VAL_TYPE>* get_vars() { return symtab.get_vars(); }
+        VAL_TYPE& get_var_value(std::string_view name) { return symtab[name]; }
 
         virtual ~scope_node() {}
 
