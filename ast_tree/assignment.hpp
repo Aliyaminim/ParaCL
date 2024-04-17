@@ -15,19 +15,19 @@ namespace AST {
         assignment_expr(variable_expr* v, base_expr_node* r, scope_node* curr_sc_) :
             base_expr_node(base_expr_node_type::ASSIGNMENT), rhs(r), curr_scope(curr_sc_)
         {   lhs.push_back(v);
-            curr_scope->declare(v->name());
+            curr_scope->declare(v->get_name());
         }
 
         void add_var(variable_expr* var) {
             lhs.push_back(var);
-            curr_scope->declare(var->name());
+            curr_scope->declare(var->get_name());
         }
 
         void define(VAL_TYPE value) {
             for (auto var : lhs) {
-                auto var_scope = curr_scope->find_var(var->name());
+                auto var_scope = curr_scope->find_var(var->get_name());
                 if (var_scope) {
-                    var_scope->set(var->name(), value);
+                    var_scope->set(var->get_name(), value);
                 } else {
                     throw std::runtime_error("Defining undeclared variable");
                 }

@@ -160,10 +160,10 @@ namespace AST {
             auto var_scope = X->get_scope();
             if (!var_scope) {
                 std::string msg = "Variable is undeclared: ";
-                msg += X->name();
+                msg += X->get_name();
                 throw std::runtime_error(msg);
             }
-            auto var_value = var_scope->get_var_value(X->name());
+            auto var_value = var_scope->get_var_value(X->get_name());
             return var_value;
         }
 
