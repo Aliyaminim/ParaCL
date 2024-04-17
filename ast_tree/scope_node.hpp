@@ -18,7 +18,7 @@ namespace AST {
         void set_parent_scope(scope_node* p) noexcept { parent_scope = p; }
         void set_stmts(std::vector<base_ast_node*> cont) { container_stmts = cont; }
 
-        std::vector<base_ast_node*>* get_container() {return &container_stmts;};
+        std::vector<base_ast_node*> & get_container() {return container_stmts;};
 
         scope_node* find_var(std::string_view name) {
             auto curr_scope = this;

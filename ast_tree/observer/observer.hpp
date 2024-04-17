@@ -21,32 +21,26 @@ namespace AST {
 
             switch (X->get_expr_type())
             {
-            case base_expr_node_type::ASSIGNMENT:{
-                assignment_expr * A = static_cast<assignment_expr*>(X);
-                return eval(A);}
+            case base_expr_node_type::ASSIGNMENT:
+                return eval(static_cast<assignment_expr*>(X));
 
-            case base_expr_node_type::BINARY_EXPR:{
-                binary_expr * B = static_cast<binary_expr*>(X);
-                return eval(B);}
+            case base_expr_node_type::BINARY_EXPR:
+                return eval(static_cast<binary_expr*>(X));
 
-            case base_expr_node_type::NUMBER_EXPR:{
-                number_expr * C = static_cast<number_expr*>(X);
-                return eval(C);}
+            case base_expr_node_type::NUMBER_EXPR:
+                return eval(static_cast<number_expr*>(X));
 
-            case base_expr_node_type::UNARY_EXPR:{
-                unary_expr * D = static_cast<unary_expr*>(X);
-                return eval(D);}
+            case base_expr_node_type::UNARY_EXPR:
+                return eval(static_cast<unary_expr*>(X));
 
-            case base_expr_node_type::VAR_EXPR:{
-                variable_expr * E = static_cast<variable_expr*>(X);
-                return eval(E);}
+            case base_expr_node_type::VAR_EXPR:
+                return eval(static_cast<variable_expr*>(X));
 
-            case base_expr_node_type::READ_EXPR:{
-                read_expr * F = static_cast<read_expr*>(X);
-                return eval(F);}
+            case base_expr_node_type::READ_EXPR:
+                return eval(static_cast<read_expr*>(X));
 
-            default:{
-                throw std::runtime_error("Unknown expression!");}
+            default:
+                throw std::runtime_error("Unknown expression!");
             }
         }
 
@@ -173,18 +167,15 @@ namespace AST {
             }
             switch (X->get_ast_type())
             {
-            case base_ast_node_type::EXPR:{
-                base_expr_node * A = static_cast<base_expr_node*>(X);
-                return eval(A);}
+            case base_ast_node_type::EXPR:
+                return eval(static_cast<base_expr_node*>(X));
 
             case base_ast_node_type::STMT:{
-                base_stmt_node * B = static_cast<base_stmt_node*>(X);
-                eval(B);
+                eval(static_cast<base_stmt_node*>(X));
                 return 0;}
 
             case base_ast_node_type::SCOPE:{
-                scope_node * C = static_cast<scope_node*>(X);
-                eval(C);
+                eval(static_cast<scope_node*>(X));
                 return 0;}
 
             default:
@@ -196,7 +187,7 @@ namespace AST {
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
-            for (auto i : *(X->get_container())){
+            for (auto i : X->get_container()){
                 eval(i);
             }
         }
@@ -208,19 +199,16 @@ namespace AST {
             switch (X->get_expr_type())
             {
             case base_stmt_node_type::IF_STMT:{
-                if_stmt * A = static_cast<if_stmt*>(X);
-                eval(A);
+                eval(static_cast<if_stmt*>(X));
                 break;}
             case base_stmt_node_type::WHILE_STMT:{
-                while_stmt * B = static_cast<while_stmt*>(X);
-                eval(B);
+                eval(static_cast<while_stmt*>(X));
                 break;}
             case base_stmt_node_type::PRINT_STMT:{
-                print_stmt * C = static_cast<print_stmt*>(X);
-                eval(C);
+                eval(static_cast<print_stmt*>(X));
                 break;}
-            default:{
-                throw std::runtime_error("Unknown statement!");}
+            default:
+                throw std::runtime_error("Unknown statement!");
             }
         }
 
