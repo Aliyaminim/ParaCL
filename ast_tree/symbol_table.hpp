@@ -14,8 +14,6 @@ namespace AST {
 
         VAL_TYPE &operator[](std::string_view name) { return var_names[name]; }
 
-        std::unordered_map<std::string_view, VAL_TYPE>* get_vars() { return &var_names; }
-
     };
 
 }
