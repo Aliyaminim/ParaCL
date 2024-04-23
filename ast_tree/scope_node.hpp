@@ -20,7 +20,7 @@ namespace AST {
 
         std::vector<base_ast_node*> & get_container() {return container_stmts;};
 
-        scope_node* find_var(std::string_view name) {
+        const scope_node* find_var(std::string_view name) const {
             auto curr_scope = this;
             do {
                 if(curr_scope->contains(name))

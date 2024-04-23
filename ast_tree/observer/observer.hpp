@@ -157,7 +157,7 @@ namespace AST {
                 msg += X->get_name();
                 throw std::runtime_error(msg);
             }
-            auto var_value = var_scope->get_var_value(X->get_name());
+            auto var_value = const_cast<scope_node*>(var_scope)->get_var_value(X->get_name());
             return var_value;
         }
 

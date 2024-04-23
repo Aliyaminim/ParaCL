@@ -17,7 +17,7 @@ namespace AST {
             return name_;
         }
 
-        scope_node* get_scope() {
+        const scope_node* get_scope() const {
             return curr_scope->find_var(name_);
         }
 
