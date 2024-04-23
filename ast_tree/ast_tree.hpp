@@ -3,13 +3,13 @@
 #include <memory>
 #include "base_ast_node.hpp"
 #include "scope_node.hpp"
-#include <deque> //only insertion occurs
+#include <vector>
 
 
 namespace AST {
     class astree final{
         scope_node* root = nullptr;
-        std::deque<std::unique_ptr<base_ast_node>> node_storage;
+        std::vector<std::unique_ptr<base_ast_node>> node_storage;
 
     public:
         astree() : root(new scope_node()) {
