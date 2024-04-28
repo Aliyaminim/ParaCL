@@ -151,14 +151,8 @@ namespace AST {
             if (X == nullptr){
                 throw std::runtime_error("nullptr_node_arg");
             }
-            auto var_scope = X->get_scope();
-            if (!var_scope) {
-                std::string msg = "Variable is undeclared: ";
-                msg += X->get_name();
-                throw std::runtime_error(msg);
-            }
-            auto var_value = const_cast<scope_node*>(var_scope)->get_var_value(X->get_name());
-            return var_value;
+
+            return X->get_value();
         }
 
         VAL_TYPE eval(base_ast_node * X){

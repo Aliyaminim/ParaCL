@@ -17,11 +17,10 @@ namespace AST {
             return name_;
         }
 
-        const scope_node* get_scope() const {
-            return curr_scope->find_var(name_);
+        VAL_TYPE& get_value() {
+            return curr_scope->get_var_value(name_);
         }
 
         virtual ~variable_expr() {}
-
     };
 }

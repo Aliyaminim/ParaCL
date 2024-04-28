@@ -25,12 +25,7 @@ namespace AST {
 
         void define(VAL_TYPE value) {
             for (auto var : lhs) {
-                auto var_scope = const_cast<scope_node*>(curr_scope->find_var(var->get_name()));
-                if (var_scope) {
-                    var_scope->set(var->get_name(), value);
-                } else {
-                    throw std::runtime_error("Defining undeclared variable");
-                }
+                curr_scope->define(var->get_name(), value);
             }
         }
 
